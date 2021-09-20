@@ -2,22 +2,67 @@
 
 namespace App\Controllers;
 
+use App\Data\Survey;
+use App\Data\User as User;
 use SurveyJawabanModel;
 use SurveyModel;
+use UserModel;
 
 class Home extends BaseController
 {
 	protected $surveyModel;
 	protected $surveyJawabanModel;
+	protected $userModel;
 
 	public function __construct()
 	{
 		$this->surveyModel = new SurveyModel();
 		$this->surveyJawabanModel = new SurveyJawabanModel();
+		$this->userModel = new UserModel();
 	}
 
 	public function index()
 	{
+		$this->showTestData(false);
+		$this->testInsertSurvey();
+		$this->testInsertUser();
+	}
+
+	private function testInsertUser()
+	{
+		# code...
+		//hanya untuk test
+		$user = new User();
+		$user->username = 'test';
+		$user->email = 'test';
+		$user->firstName = 'iam';
+		$user->lastName = 'legend';
+		$user->password = password_hash('test', PASSWORD_DEFAULT);
+		$user->roleId = '1';
+		$user->isActive = '1';
+		$insert = $this->userModel->insertUser($user);
+
+		//output dibawah ini adalah user ID yang berhasil dimasukkan kedalam database
+		$this->prettyVarDump($insert,'User Insert Test');
+	}
+
+	private function testInsertSurvey()
+	{
+		# code...
+		//hanya untuk test
+		$survey = new Survey();
+		$survey->judul = 'test';
+		$survey->deskripsi = 'test';
+		$survey->jumlahResponden = 0;
+		$insert = $this->surveyModel->insertSurvey($survey);
+
+		//output dibawah ini adalah survey ID yang berhasil dimasukkan kedalam database
+		$this->prettyVarDump($insert, 'Survey Input Test');
+	}
+
+	private function showTestData(bool $showJson = false)
+	{
+		# code...
 		$detailSurvey = $this->surveyModel->detailSurvey(1)->getResult();
 		$detailJawaban = $this->surveyJawabanModel->detailJawaban(1)->getResult();
 
@@ -27,22 +72,15 @@ class Home extends BaseController
 			$array['survey_desc'] = $value->deskripsi;
 			$array['pertanyaan'][$value->id_survey_pertanyaan] = $value->pertanyaan;
 		}
-		$this->var_dump($array);
-		$this->var_dump($detailJawaban);
-		//echo '<pre>' . json_encode($detailJawaban, JSON_PRETTY_PRINT) . '</pre>';
-	}
 
-	public function tambahSurvey()
-	{
-		# code...
-		
-	}
+		if ($showJson) {
+			echo 'Detail Survey Mode JSON';
+			echo '<pre>' . json_encode($detailJawaban, JSON_PRETTY_PRINT) . '</pre>';
+			return;
+		}
 
-	private function var_dump($var)
-	{
-		# code...
-		echo '<pre>';
-		print_r($var);
-		echo '</pre>';
+
+		$this->prettyVarDump($array, 'Detail Survey');
+		$this->prettyVarDump($detailJawaban, 'Detail Survey Jawaban');
 	}
 }

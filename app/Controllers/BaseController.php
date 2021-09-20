@@ -30,6 +30,13 @@ class BaseController extends Controller
 	protected $helpers = [];
 
 	/**
+	 * sebuah array yang menginisiasikan class Model yang akan digunakan.
+	 * supaya class Model tersedia pada child Controller yang meng extends
+	 * BaseController
+	 */
+	protected $models = [];
+
+	/**
 	 * Constructor.
 	 *
 	 * @param RequestInterface  $request
@@ -45,5 +52,20 @@ class BaseController extends Controller
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
+	}
+
+	/**
+	 * Fungsi ini digunakan untuk menampilkan output var_dump yang terformat
+	 * 
+	 * @param var $var Variabel bebas
+	 * @param var $judul Judul untuk output
+	 */
+	public function prettyVarDump($var, $judul)
+	{
+		echo $judul.'<br>';
+		echo '<pre>';
+		print_r($var);
+		echo '</pre>';
+		echo '<br>';
 	}
 }
