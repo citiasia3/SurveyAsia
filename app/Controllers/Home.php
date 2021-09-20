@@ -14,6 +14,7 @@ class Home extends BaseController
 	protected $surveyJawabanModel;
 	protected $userModel;
 	//test push ke branch fadhil
+	//test push ke branch fadhil yg keduaa harus dongg
 
 	public function __construct()
 	{
