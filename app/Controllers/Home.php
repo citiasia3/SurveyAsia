@@ -13,6 +13,7 @@ class Home extends BaseController
 	protected $surveyModel;
 	protected $surveyJawabanModel;
 	protected $userModel;
+	//test push ke branch fadhil
 
 	public function __construct()
 	{
@@ -43,7 +44,7 @@ class Home extends BaseController
 		$insert = $this->userModel->insertUser($user);
 
 		//output dibawah ini adalah user ID yang berhasil dimasukkan kedalam database
-		$this->prettyVarDump($insert,'User Insert Test');
+		$this->prettyVarDump($insert, 'User Insert Test');
 	}
 
 	private function testInsertSurvey()
