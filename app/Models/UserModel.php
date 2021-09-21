@@ -17,7 +17,7 @@ class UserModel extends Model
 
     //informasi field
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['id_user', 'username', 'email', 'password', 'first_name', 'last_name','role_id', 'is_active'];
+    protected $allowedFields = ['id_user', 'username', 'email', 'password', 'first_name', 'last_name', 'role_id', 'is_active'];
     protected $validationRules = [];
 
 
@@ -31,7 +31,7 @@ class UserModel extends Model
     public function getUserById(bool $singleResult, $idUser)
     {
         # code...
-        return $this->doFind($singleResult,$idUser);
+        return $this->doFind($singleResult, $idUser);
     }
 
     /**

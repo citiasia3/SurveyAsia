@@ -26,8 +26,8 @@ class Home extends BaseController
 	public function index()
 	{
 		$this->showTestData(false);
-		$this->testInsertSurvey();
-		$this->testInsertUser();
+		// $this->testInsertSurvey();
+		// $this->testInsertUser();
 	}
 
 	private function testInsertUser()

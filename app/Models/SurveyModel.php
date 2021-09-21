@@ -21,7 +21,8 @@ class SurveyModel extends Model
     protected $validationRules = [];
     protected $builder;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->builder = $this->builder();
     }
 
@@ -34,7 +35,7 @@ class SurveyModel extends Model
     public function getSurveyById(bool $singleResult, $idSurvey)
     {
         # code...
-        return $this->doFind($singleResult,$idSurvey);
+        return $this->doFind($singleResult, $idSurvey);
     }
 
 
@@ -60,6 +61,12 @@ class SurveyModel extends Model
     {
         # code...
         return $this->insert($survey->classToArray());
+    }
+
+    public function tambah_survey($data)
+    {
+        $query = $this->db->table('survey')->insert($data);
+        return $query;
     }
 
     public function updateSurvey(Survey $survey)
