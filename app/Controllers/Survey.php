@@ -86,54 +86,21 @@ class Survey extends BaseController
     }
     // <?= base_url('uploads/survey/' . $p['gambar']); ">
 
-    public function delete($id)
+    public function deleteSurvey($id)
     {
-        $this->survey_model->delete_survey($id);
-        return redirect()->to(base_url('pages'))->with('success', 'Delete survey ' . 'success');
+        $this->survey_model->deleteSurvey($id);
+        return redirect()->to(base_url('survey'))->with('success', 'Delete survey ' . 'success');
     }
     public function edit()
     {
         $request = \Config\Services::request();
-        if (!$this->validate([
-            'gambar' => [
-                'rules' => 'is_image[gambar]',
-                'errors' => [
-                    'is_image' => 'File harus berupa jpg/jpeg/png'
-                ]
-            ],
-
-        ])) {
-            session()->setFlashdata('error', $this->validator->listErrors());
-            return redirect()->back()->withInput();
-        } else {
-            echo "<pre>";
-            var_dump($request->getVar());
-            echo "</pre>";
-        }
-        $id =  $request->getPost('id');
-        if ($_FILES['gambar']['name']) {
-            $dataBerkas = $request->getFile('gambar');
-            $fileName = $dataBerkas->getRandomName();
-            $data = [
-                "nama" => $request->getPost('nama'),
-                "deskripsi" => $request->getPost('deskripsi'),
-                "harga" => $request->getPost('harga'),
-                "gambar" => $fileName,
-                "status" => $request->getPost('status')
-            ];
-            $this->survey_model->edit_survey($data, $id);
-            $dataBerkas->move('uploads/survey/', $fileName);
-            return redirect()->to(base_url('pages'))->with('success', 'Ubah survey ' . 'success');
-        } else {
-            $data = [
-                "nama" => $request->getPost('nama'),
-                "deskripsi" => $request->getPost('deskripsi'),
-                "harga" => $request->getPost('harga'),
-                "status" => $request->getPost('status'),
-                "stok" => $request->getPost('stok')
-            ];
-            $this->survey_model->edit_survey($data, $id);
-            return redirect()->to(base_url('pages'))->with('success', 'Ubah survey ' . 'success');
-        }
+        $id_survey =  $request->getPost('id_survey');
+        $data_survey = [
+            "judul" => $request->getPost('judul'),
+            "deskripsi" => $request->getPost('deskripsi'),
+            "jumlah_responden" => $request->getPost('jumlah_responden'),
+        ];
+        $this->survey_model->updateSurvey($data_survey, $id_survey);
+        return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
     }
 }

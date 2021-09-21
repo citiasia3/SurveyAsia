@@ -37,7 +37,10 @@
                                     <td><?= $s->judul ?></td>
                                     <td><?= $s->deskripsi ?></td>
                                     <td><?= $s->jumlah_responden ?></td>
-                                    <td><a href="/survey/detailSurvey/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a></td>
+                                    <td>
+                                        <a href="/survey/detailSurvey/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a>
+                                        <a href="/survey/deleteSurvey/<?= $s->id_survey ?>" class="btn btn-danger">Delete</a>
+                                    </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

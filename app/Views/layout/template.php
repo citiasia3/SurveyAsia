@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <?= $this->include('layout/nav') ?>
 
     <?= $this->renderSection('content'); ?>
 

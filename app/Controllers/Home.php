@@ -25,9 +25,12 @@ class Home extends BaseController
 
 	public function index()
 	{
-		$this->showTestData(false);
-		// $this->testInsertSurvey();
-		// $this->testInsertUser();
+		$data = [
+			'title' => 'Dashboard',
+
+		];
+		// var_dump($survey);
+		return view('home/index', $data);
 	}
 
 	private function testInsertUser()

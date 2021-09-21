@@ -75,9 +75,11 @@ class SurveyModel extends Model
         return $query;
     }
 
-    public function updateSurvey(Survey $survey)
+    public function updateSurvey($data, $id_survey)
     {
-        # code...
+        $builder = $this->db->table($this->table);
+        $builder->where('id_survey', $id_survey);
+        return $builder->update($data);
     }
 
     public function updateOrInsertSurvey(Survey $survey)
