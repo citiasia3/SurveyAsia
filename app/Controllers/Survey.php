@@ -4,13 +4,16 @@ namespace App\Controllers;
 
 // use App\Models\SurveyModel;
 use SurveyModel;
+use SurveyPertanyaanModel;
 
 class Survey extends BaseController
 {
     protected $survey_model;
+    protected $survey_pertanyaan_model;
     public function __construct()
     {
         $this->survey_model = new SurveyModel();
+        $this->survey_pertanyaan_model = new SurveyPertanyaanModel();
         // $this->galery_model = new Galery_model();
     }
     public function index()
@@ -27,7 +30,8 @@ class Survey extends BaseController
     public function detailSurvey($id)
     {
         $survey = $this->survey_model->getSurveyById($id)->getRow();
-        $pertanyaanbyIdSurvey = $this->survey_model->detailSurvey($id)->getResult();
+        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
+
         // dd($pertanyaanbyIdSurvey);
         $data = [
             'title' => 'Detail survey',
