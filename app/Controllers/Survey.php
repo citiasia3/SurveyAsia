@@ -23,6 +23,20 @@ class Survey extends BaseController
         // var_dump($survey);
         return view('survey/index', $data);
     }
+
+    public function detailSurvey($id)
+    {
+        $survey = $this->survey_model->getSurveyById($id)->getRow();
+        $pertanyaanbyIdSurvey = $this->survey_model->detailSurvey($id)->getResult();
+        // dd($pertanyaanbyIdSurvey);
+        $data = [
+            'title' => 'Detail survey',
+            'survey' => $survey,
+            'pertanyaanbyIdSurvey' => $pertanyaanbyIdSurvey,
+        ];
+        // tampilkan form create
+        return view('survey/detailSurvey', $data);
+    }
     public function tambahsurvey()
     {
         $data = [
@@ -46,50 +60,6 @@ class Survey extends BaseController
     public function save()
     {
         $request = \Config\Services::request();
-        // if (!$this->validate([
-        //     'gambar' => [
-        //         'rules' => 'is_image[gambar]',
-        //         'errors' => [
-        //             'is_image' => 'File harus berupa jpg/jpeg/png'
-        //         ]
-        //     ],
-        //     'nama' => [
-        //         'rules' => 'required',
-        //         'errors' => [
-        //             'required' => '{field} harus dilengkapi'
-        //         ]
-        //     ],
-        //     'deskripsi' => [
-        //         'rules' => 'required',
-        //         'errors' => [
-        //             'required' => '{field} harus dilengkapi'
-        //         ]
-        //     ],
-        //     'harga' => [
-        //         'rules' => 'required',
-        //         'errors' => [
-        //             'required' => '{field} harus dilengkapi'
-        //         ]
-        //     ],
-        //     'stok' => [
-        //         'rules' => 'required',
-        //         'errors' => [
-        //             'required' => '{field} harus dilengkapi'
-        //         ]
-        //     ],
-
-        // ])) {
-        //     session()->setFlashdata('error', $this->validator->listErrors());
-        //     return redirect()->back()->withInput();
-        // } else {
-        //     echo "<pre>";
-        //     var_dump($request->getVar());
-        //     echo "</pre>";
-        // }
-        // $random = rand(000, 999);
-        // $files = $request->getFiles();
-        // $dataBerkas = $request->getFiles();
-        // $fileName = $dataBerkas->getRandomName();
 
         //cara fadhil insert db
         $data_survey = [
@@ -98,25 +68,9 @@ class Survey extends BaseController
             "deskripsi" => $request->getPost('deskripsi'),
             "jumlah_responden" => $request->getPost('jumlah_responden'),
         ];
-        // dd($data_survey);
-        // $query = $this->db->table('galeries')->insert($data_survey);
-
         $this->survey_model->tambah_survey($data_survey);
 
-        // ulangi insert gambar ke table galery menggunakan foreach
-        // foreach ($files['gambar'] as $img) {
-        //     $data_galery = [
-        //         'upload_id' => $random,
-        //         'gambar' => $img->getRandomName()
-        //     ];
-        //     $this->galery_model->insertGalery($data_galery);
-        //     $img->move('uploads/survey/', $img->getRandomName());
-        //     // $img->move(ROOTPATH . 'public/uploads', $img->getRandomName());
-        // }
-        // return redirect()->to(base_url('pages'))->with('success', 'Tambah survey ' . 'success');
-
         //cara levi insert db
-
         # code...
         //hanya untuk test
         // $survey = new Survey();

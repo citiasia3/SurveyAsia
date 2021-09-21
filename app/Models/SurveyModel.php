@@ -31,11 +31,17 @@ class SurveyModel extends Model
         # untuk menampilkan semua survey
         return $this->builder->get();
     }
-
-    public function getSurveyById(bool $singleResult, $idSurvey)
+    // menampilkan survey by id cara levi
+    // public function getSurveyById(bool $singleResult, $idSurvey)
+    // {
+    //     # code...
+    //     return $this->doFind($singleResult, $idSurvey);
+    // }
+    // menampilkan survey by id cara fadhil
+    public function getSurveyById($idSurvey)
     {
         # code...
-        return $this->doFind($singleResult, $idSurvey);
+        return $this->getWhere(['id_survey' => $idSurvey]);
     }
 
 
