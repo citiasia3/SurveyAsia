@@ -32,8 +32,9 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <?php $i = 1; ?>
                                 <?php foreach ($survey as $s) : ?>
-                                    <th scope="row"><?= $s->id_survey ?></th>
+                                    <th scope="row"><?= $i++; ?></th>
                                     <td><?= $s->judul ?></td>
                                     <td><?= $s->deskripsi ?></td>
                                     <td><?= $s->jumlah_responden ?></td>
@@ -43,6 +44,7 @@
                                     </td>
                             </tr>
                         <?php endforeach; ?>
+                        <?php $i; ?>
                         </tbody>
                     </table>
                 </div>
