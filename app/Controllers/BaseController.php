@@ -7,6 +7,11 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+use SurveyJawabanModel;
+use SurveyModel;
+use SurveyPertanyaanModel;
+use UserModel;
+
 /**
  * Class BaseController
  *
@@ -30,11 +35,14 @@ class BaseController extends Controller
 	protected $helpers = [];
 
 	/**
-	 * sebuah array yang menginisiasikan class Model yang akan digunakan.
+	 * Menginisiasikan class Model yang akan digunakan.
 	 * supaya class Model tersedia pada child Controller yang meng extends
 	 * BaseController
 	 */
-	protected $models = [];
+	protected $surveyModel;
+	protected $surveyJawabanModel;
+	protected $userModel;
+	protected $surveyPertanyaanModel;
 
 	/**
 	 * Constructor.
@@ -52,6 +60,13 @@ class BaseController extends Controller
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
+
+		$this->surveyModel = new SurveyModel();
+		$this->surveyJawabanModel = new SurveyJawabanModel();
+		$this->userModel = new UserModel();
+		$this->surveyPertanyaanModel = new SurveyPertanyaanModel();
+
+		//$this->userModel->delete();
 	}
 
 	/**

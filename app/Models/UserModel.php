@@ -17,8 +17,15 @@ class UserModel extends Model
 
     //informasi field
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['id_user', 'username', 'email', 'password', 'first_name', 'last_name','role_id', 'is_active'];
+    protected $allowedFields = ['id_user', 'username', 'email', 'password', 'first_name', 'last_name', 'role_id', 'is_active'];
     protected $validationRules = [];
+
+    protected $builder;
+
+    public function __construct()
+    {
+        $this->builder = $this->builder();
+    }
 
 
     public function getAllUser()
@@ -31,7 +38,7 @@ class UserModel extends Model
     public function getUserById(bool $singleResult, $idUser)
     {
         # code...
-        return $this->doFind($singleResult,$idUser);
+        return $this->doFind($singleResult, $idUser);
     }
 
     /**
@@ -45,10 +52,10 @@ class UserModel extends Model
         return $this->insert($user->classToArray());
     }
 
-    public function updateUser(User $user)
+    public function updateUser($idUser, User $user)
     {
         # code...
-        return $this->update($user);
+        return $this->update($idUser, $user->classToArray());
     }
 
     public function updateOrInsert(User $user)
@@ -60,7 +67,7 @@ class UserModel extends Model
     public function deleteUser($id_user)
     {
         # code...
-        return $this->doDelete($id_user);
+        return $this->delete($id_user);
     }
 
     public function getUserRole($id_user)

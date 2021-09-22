@@ -4,28 +4,17 @@ namespace App\Controllers;
 
 use App\Data\Survey;
 use App\Data\User as User;
-use SurveyJawabanModel;
-use SurveyModel;
-use UserModel;
 
 class Home extends BaseController
 {
-	protected $surveyModel;
-	protected $surveyJawabanModel;
 	protected $userModel;
-
-	public function __construct()
-	{
-		$this->surveyModel = new SurveyModel();
-		$this->surveyJawabanModel = new SurveyJawabanModel();
-		$this->userModel = new UserModel();
-	}
 
 	public function index()
 	{
-		$this->showTestData(false);
-		$this->testInsertSurvey();
-		$this->testInsertUser();
+		/* $this->type_satu(1,false); */
+		//$this->testDeleteUser(20);
+		//$this->testInsertUser();
+		//$this->testUpdateUser(21);
 	}
 
 	private function testInsertUser()
@@ -43,7 +32,36 @@ class Home extends BaseController
 		$insert = $this->userModel->insertUser($user);
 
 		//output dibawah ini adalah user ID yang berhasil dimasukkan kedalam database
-		$this->prettyVarDump($insert,'User Insert Test');
+		$this->prettyVarDump($insert, 'User Insert Test');
+	}
+
+	private function testDeleteUser($id_user)
+	{
+		# code...
+		$delete = $this->userModel->deleteUser($id_user);
+		if ($delete->connID->affected_rows > 0) {
+			# code...
+			echo 'User deleted! id = '.$id_user;
+		}else{
+			echo 'Test Fail';
+		}
+	}
+	
+	private function testUpdateUser($id_user)
+	{
+		# code...
+		$user = new User();
+		$user->idUser = $id_user;
+		$user->username = 'test';
+		$user->email = 'test';
+		$user->firstName = 'iam';
+		$user->lastName = 'legend';
+		$user->password = password_hash('test', PASSWORD_DEFAULT);
+		$user->roleId = '1';
+		$user->isActive = '1';
+
+		$update = $this->userModel->updateUser($id_user, $user);
+		$this->prettyVarDump($update, 'Test Update');
 	}
 
 	private function testInsertSurvey()
@@ -60,27 +78,70 @@ class Home extends BaseController
 		$this->prettyVarDump($insert, 'Survey Input Test');
 	}
 
-	private function showTestData(bool $showJson = false)
+	private function type_dua(bool $showJson)
 	{
 		# code...
-		$detailSurvey = $this->surveyModel->detailSurvey(1)->getResult();
-		$detailJawaban = $this->surveyJawabanModel->detailJawaban(1)->getResult();
+		$allSurvey = $this->surveyModel->getAllSurvey()->getResult();
 
-		foreach ($detailSurvey as $key => $value) {
+		$num = 0;
+		foreach ($allSurvey as $key => $value) {
 			# code...
-			$array['survey_id'] = $value->id_survey;
-			$array['survey_desc'] = $value->deskripsi;
-			$array['pertanyaan'][$value->id_survey_pertanyaan] = $value->pertanyaan;
+			$data[$num]['id_survey'] = $value->id_survey;
+			$data[$num]['judul'] = $value->judul;
+			$data[$num]['deskripsi'] = $value->deskripsi;
+			$data[$num]['jml_responden'] = $value->jumlah_responden;
+			$data[$num]['pertanyaan'] = [];
+			$listPertanyaan = $this->surveyPertanyaanModel->getPertanyaanBySurveyId($value->id_survey)->getResultArray();
+			if ($listPertanyaan != null) {
+				# code...
+				$num2 = 0;
+				foreach ($listPertanyaan as $mkey => $mvalue) {
+					# code...
+					$pertanyaan[$mkey] = $mvalue;
+					$data[$num]['pertanyaan'] = $pertanyaan;
+					$num2++;
+				}
+			}
+			$num++;
 		}
 
+		//cara akses array diatas
+		/* foreach ($data as $key => $value) {
+			# code...
+			foreach ($value as $mkey => $mvalue) {
+				# code...
+				
+				$this->prettyVarDump($mvalue,'tes');
+				if ($mkey == 'pertanyaan') {
+					# code...
+					foreach ($mvalue as $xkey => $xvalue) {
+						# code...
+						
+					}
+				}
+			}
+		} */
+
 		if ($showJson) {
-			echo 'Detail Survey Mode JSON';
-			echo '<pre>' . json_encode($detailJawaban, JSON_PRETTY_PRINT) . '</pre>';
+			$this->prettyVarDump(json_encode($data, JSON_PRETTY_PRINT), 'All Survey JSON');
+			return;
+		}
+
+		$this->prettyVarDump($data, 'All Survey');
+	}
+
+	private function type_satu($id_survey, bool $showJson = false)
+	{
+		# code...
+		$detailSurvey = $this->surveyModel->detailSurvey($id_survey)->getResultArray();
+
+
+		if ($showJson) {
+			$this->prettyVarDump(json_encode($detailSurvey, JSON_PRETTY_PRINT), 'Detail Survey');
 			return;
 		}
 
 
-		$this->prettyVarDump($array, 'Detail Survey');
-		$this->prettyVarDump($detailJawaban, 'Detail Survey Jawaban');
+		$this->prettyVarDump($detailSurvey, 'Detail Survey');
 	}
 }
