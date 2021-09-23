@@ -77,21 +77,22 @@ class Pertanyaan extends BaseController
         return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Berhasil menambahkan peratanyaan');
     }
 
-    public function deleteSurvey($id)
+    public function deletePertanyaan($id_pertanyaan, $id_survey)
     {
-        $this->survey_model->deleteSurvey($id);
-        return redirect()->to(base_url('survey'))->with('success', 'Delete survey ' . 'success');
+
+        $this->survey_pertanyaan_model->deletePertanyaan($id_pertanyaan);
+        return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Delete Pertanyaan ' . 'success');
     }
     public function edit()
     {
         $request = \Config\Services::request();
-        $id_survey =  $request->getPost('id_survey');
-        $data_survey = [
-            "judul" => $request->getPost('judul'),
-            "deskripsi" => $request->getPost('deskripsi'),
-            "jumlah_responden" => $request->getPost('jumlah_responden'),
+        $id_survey = $request->getPost('id_survey');
+        $id_survey_pertanyaan =  $request->getPost('id_survey_pertanyaan');
+        $data_survey_pertanyaan = [
+            "pertanyaan" => $request->getPost('pertanyaan'),
         ];
-        $this->survey_model->updateSurvey($data_survey, $id_survey);
-        return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
+        // dd($data_survey_pertanyaan);
+        $this->survey_pertanyaan_model->updateSurveyPertanyaan($data_survey_pertanyaan, $id_survey_pertanyaan);
+        return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah Pertanyaan ' . 'success');
     }
 }

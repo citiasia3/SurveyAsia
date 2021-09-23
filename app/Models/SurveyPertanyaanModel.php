@@ -25,6 +25,12 @@ class SurveyPertanyaanModel extends Model
         $this->builder = $this->builder();
     }
 
+    public function getById($id_survey_pertanyaan)
+    {
+        # code...
+        return $this->getWhere(['id_survey_pertanyaan' => $id_survey_pertanyaan]);
+    }
+
     public function getPertanyaanBySurveyId($idSurvey)
     {
         # code...
@@ -35,5 +41,34 @@ class SurveyPertanyaanModel extends Model
     {
         $query = $this->db->table('survey_pertanyaan')->insert($data);
         return $query;
+    }
+    public function updateSurveyPertanyaan($data, $id_survey)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('id_survey_pertanyaan', $id_survey);
+        return $builder->update($data);
+    }
+    public function deletePertanyaan($id)
+    {
+        # code...
+        return $this->delete($id);
+    }
+
+    public function detailPertanyaanJawaban($id_survey_pertanyaan)
+    {
+        # code...
+        /* Join Tabel Survey dengan survey_pertanyaan dan survey_jawaban */
+        $this->builder->select('survey_pertanyaan.id_survey_pertanyaan, survey_pertanyaan.pertanyaan, survey_jawaban.id_survey_jawaban, survey_jawaban.isi_jawaban, survey_jawaban.id_responden');
+
+        //$builder->from($this->table);
+
+        /* INNER JOIN dengan foreign key */
+        // $this->builder->join('survey_pertanyaan', 'survey_pertanyaan.id_survey = survey.id_survey');
+        $this->builder->join('survey_jawaban', 'survey_jawaban.id_survey_pertanyaan = survey_pertanyaan.id_survey_pertanyaan');
+
+        /* Mencari ID spesifik */
+        $this->builder->where('survey_pertanyaan.id_survey_pertanyaan', $id_survey_pertanyaan);
+
+        return $this->builder->get();
     }
 }

@@ -101,6 +101,32 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Modal Edit Pertanyaan -->
+                            <div class="modal fade" id="modalEditPertanyaan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Pertanyaan</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/pertanyaan/edit" method="post" enctype="multipart/form-data">
+                                                <div class="row mb-3">
+                                                    <input type="hidden" class="form-control" id="inputEmail3" name="id_survey" value="<?= $survey->id_survey ?>">
+                                                    <input type="hidden" class="form-control" id="idPertanyaan" name="id_survey_pertanyaan">
+                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Pertanyaan</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="pertanyaan" name="pertanyaan">
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <table class="table">
@@ -112,14 +138,21 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $i = 1; ?>
                             <?php foreach ($pertanyaanbyIdSurvey as $p) : ?>
                                 <tr>
-                                    <th scope="row"><?= $p->id_survey_pertanyaan ?>.</th>
+                                    <th scope="row"><?= $i++; ?>.</th>
                                     <td><a href=""><?= $p->pertanyaan ?></a></td>
-                                    <td><a href="">edit</a></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditPertanyaan" data-bs-whatever="<?= $p->id_survey_pertanyaan ?>" data-pertanyaan="<?= $p->pertanyaan ?>">
+                                            Edit
+                                        </button>
+                                        <a href="/pertanyaan/deletePertanyaan/<?= $p->id_survey_pertanyaan ?>/<?= $survey->id_survey ?>">Delete</a>
+                                    </td>
                                 </tr>
                         </tbody>
                     <?php endforeach; ?>
+                    <?php $i; ?>
                     </table>
 
                 </div>
@@ -127,5 +160,8 @@
         </div>
     </div>
 </div>
+
+
+<script src="/assets/js/detail_survey.js"></script>
 
 <?= $this->endSection(); ?>
