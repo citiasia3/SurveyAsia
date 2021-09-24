@@ -6,11 +6,13 @@ use App\Data\Survey;
 use App\Data\User as User;
 use SurveyJawabanModel;
 use SurveyModel;
+use SurveyPertanyaanModel;
 use UserModel;
 
 class Home extends BaseController
 {
 	protected $surveyModel;
+	protected $surveyPertanyaanModel;
 	protected $surveyJawabanModel;
 	protected $userModel;
 	//test push ke branch fadhil
@@ -19,6 +21,7 @@ class Home extends BaseController
 	public function __construct()
 	{
 		$this->surveyModel = new SurveyModel();
+		$this->surveyPertanyaanModel = new SurveyPertanyaanModel();
 		$this->surveyJawabanModel = new SurveyJawabanModel();
 		$this->userModel = new UserModel();
 	}
@@ -29,6 +32,9 @@ class Home extends BaseController
 			'title' => 'Dashboard',
 
 		];
+
+		$this->showTestData();
+
 		// var_dump($survey);
 		return view('home/index', $data);
 	}
@@ -68,24 +74,25 @@ class Home extends BaseController
 	private function showTestData(bool $showJson = false)
 	{
 		# code...
-		$detailSurvey = $this->surveyModel->detailSurvey(1)->getResult();
-		$detailJawaban = $this->surveyJawabanModel->detailJawaban(1)->getResult();
+		// $detailSurvey = $this->surveyModel->detailSurvey(1)->getResult();
+		// $detailJawaban = $this->surveyJawabanModel->detailJawaban(1)->getResult();
 
-		foreach ($detailSurvey as $key => $value) {
+		$detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban(1)->getResult();
+		foreach ($detailSurveyPertanyaan as $key => $value) {
 			# code...
-			$array['survey_id'] = $value->id_survey;
-			$array['survey_desc'] = $value->deskripsi;
-			$array['pertanyaan'][$value->id_survey_pertanyaan] = $value->pertanyaan;
+			$array['pertanyaan'] = $value->pertanyaan;
+			// $array['survey_desc'] = $value->deskripsi;
+			$array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
 		}
 
 		if ($showJson) {
 			echo 'Detail Survey Mode JSON';
-			echo '<pre>' . json_encode($detailJawaban, JSON_PRETTY_PRINT) . '</pre>';
+			// echo '<pre>' . json_encode($detailJawaban, JSON_PRETTY_PRINT) . '</pre>';
 			return;
 		}
 
 
 		$this->prettyVarDump($array, 'Detail Survey');
-		$this->prettyVarDump($detailJawaban, 'Detail Survey Jawaban');
+		// $this->prettyVarDump($detailJawaban, 'Detail Survey Jawaban');
 	}
 }

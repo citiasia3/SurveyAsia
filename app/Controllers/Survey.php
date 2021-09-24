@@ -20,7 +20,7 @@ class Survey extends BaseController
     {
         $survey = $this->survey_model->getAllSurvey()->getResult();
         $data = [
-            'title' => 'Home',
+            'title' => 'Survey',
             'survey' => $survey
         ];
         // var_dump($survey);
@@ -31,8 +31,13 @@ class Survey extends BaseController
     {
         $survey = $this->survey_model->getSurveyById($id)->getRow();
         $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
-
-        // dd($pertanyaanbyIdSurvey);
+        $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
+        // foreach ($detailSurveyPertanyaan as $key => $value) {
+        // 	# code...
+        // 	$array['pertanyaan'] = $value->pertanyaan;
+        // 	// $array['survey_desc'] = $value->deskripsi;
+        // 	$array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
+        // }
         $data = [
             'title' => 'Detail survey',
             'survey' => $survey,
@@ -41,6 +46,29 @@ class Survey extends BaseController
         // tampilkan form create
         return view('survey/detailSurvey', $data);
     }
+    public function detailPertanyaan($id_pertanyaan)
+    {
+        # code...
+        echo json_encode($this->survey_pertanyaan_model->getById($id_pertanyaan)->getResultArray());
+    }
+
+
+    public function detailSurveyResponden($id)
+    {
+        $survey = $this->survey_model->getSurveyById($id)->getRow();
+        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
+
+        // dd($pertanyaanbyIdSurvey);
+        $data = [
+            'title' => 'Detail survey Responden',
+            'survey' => $survey,
+            'pertanyaanbyIdSurvey' => $pertanyaanbyIdSurvey,
+        ];
+        // tampilkan form create
+        return view('survey/detailSurveyResponden', $data);
+    }
+
+
     public function tambahsurvey()
     {
         $data = [
