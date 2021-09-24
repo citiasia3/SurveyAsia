@@ -8,8 +8,12 @@ use App\Data\User as User;
 class Home extends BaseController
 {
 	protected $userModel;
-	//test push ke branch fadhil
-	//test push ke branch fadhil yg keduaa harus dongg
+	private $auth;
+
+	public function __construct()
+	{
+		$this->auth = service('authentication');
+	}
 
 	public function index()
 	{
@@ -17,8 +21,21 @@ class Home extends BaseController
 		//$this->testDeleteUser(20);
 		//$this->testInsertUser();
 		//$this->testUpdateUser(21);
-		echo 'home';
-		echo '<br><br><br><a href="">logout</a>';
+		/* echo 'home';
+		echo '<br><br><br><a href="">logout</a>'; */
+
+		/* $data = [
+			'title' => 'Dashboard'
+		];
+
+		return view('home/index', $data); */
+		/* $user = $this->auth->user();
+		$check = $this->auth->check();
+
+		$this->prettyVarDump($check,'user'); */
+
+		$this->type_satu(1, true);
+		$this->type_dua(true);
 	}
 
 	public function dashboard()
@@ -51,12 +68,12 @@ class Home extends BaseController
 		$delete = $this->userModel->deleteUser($id_user);
 		if ($delete->connID->affected_rows > 0) {
 			# code...
-			echo 'User deleted! id = '.$id_user;
-		}else{
+			echo 'User deleted! id = ' . $id_user;
+		} else {
 			echo 'Test Fail';
 		}
 	}
-	
+
 	private function testUpdateUser($id_user)
 	{
 		# code...
@@ -102,6 +119,9 @@ class Home extends BaseController
 			$data[$num]['jml_responden'] = $value->jumlah_responden;
 			$data[$num]['pertanyaan'] = [];
 			$listPertanyaan = $this->surveyPertanyaanModel->getPertanyaanBySurveyId($value->id_survey)->getResultArray();
+			$count = $this->surveyPertanyaanModel->countPertanyaan($value->id_survey);
+			//$this->prettyVarDump($listPertanyaan, 'List Pertanyaan');
+			$data[$num]['jml_pertanyaan'] = $count;
 			if ($listPertanyaan != null) {
 				# code...
 				$num2 = 0;
@@ -109,6 +129,8 @@ class Home extends BaseController
 					# code...
 					$pertanyaan[$mkey] = $mvalue;
 					$data[$num]['pertanyaan'] = $pertanyaan;
+					//$listJawaban = $this->;
+
 					$num2++;
 				}
 			}
