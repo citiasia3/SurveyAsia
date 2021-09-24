@@ -3,7 +3,7 @@
 use App\Data\User;
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class SurveyUserModel extends Model
 {
     //informasi tabel
     protected $table = 'user';

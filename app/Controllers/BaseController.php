@@ -5,12 +5,13 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Myth\Auth\Models\UserModel;
 use Psr\Log\LoggerInterface;
 
 use SurveyJawabanModel;
 use SurveyModel;
 use SurveyPertanyaanModel;
-use UserModel;
+use SurveyUserModel;
 
 /**
  * Class BaseController
@@ -32,7 +33,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = [];
+	protected $helpers = ['auth'];
 
 	/**
 	 * Menginisiasikan class Model yang akan digunakan.
@@ -41,8 +42,10 @@ class BaseController extends Controller
 	 */
 	protected $surveyModel;
 	protected $surveyJawabanModel;
-	protected $userModel;
+	protected $surveyUserModel;
 	protected $surveyPertanyaanModel;
+
+	protected $user;
 
 	/**
 	 * Constructor.
@@ -63,8 +66,10 @@ class BaseController extends Controller
 
 		$this->surveyModel = new SurveyModel();
 		$this->surveyJawabanModel = new SurveyJawabanModel();
-		$this->userModel = new UserModel();
+		$this->surveyUserModel = new SurveyUserModel();
 		$this->surveyPertanyaanModel = new SurveyPertanyaanModel();
+
+		$this->user = new UserModel();
 
 		//$this->userModel->delete();
 	}

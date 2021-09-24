@@ -15,6 +15,14 @@ class Home extends BaseController
 		//$this->testDeleteUser(20);
 		//$this->testInsertUser();
 		//$this->testUpdateUser(21);
+		echo 'home';
+		echo '<br><br><br><a href="">logout</a>';
+	}
+
+	public function dashboard()
+	{
+		# code...
+		echo 'dashboard';
 	}
 
 	private function testInsertUser()
