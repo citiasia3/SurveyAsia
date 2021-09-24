@@ -21,7 +21,8 @@ class SurveyModel extends Model
     protected $validationRules = [];
     protected $builder;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->builder = $this->builder();
     }
 
@@ -30,11 +31,17 @@ class SurveyModel extends Model
         # untuk menampilkan semua survey
         return $this->builder->get();
     }
-
-    public function getSurveyById(bool $singleResult, $idSurvey)
+    // menampilkan survey by id cara levi
+    // public function getSurveyById(bool $singleResult, $idSurvey)
+    // {
+    //     # code...
+    //     return $this->doFind($singleResult, $idSurvey);
+    // }
+    // menampilkan survey by id cara fadhil
+    public function getSurveyById($idSurvey)
     {
         # code...
-        return $this->doFind($singleResult,$idSurvey);
+        return $this->getWhere(['id_survey' => $idSurvey]);
     }
 
 
@@ -62,9 +69,17 @@ class SurveyModel extends Model
         return $this->insert($survey->classToArray());
     }
 
-    public function updateSurvey(Survey $survey)
+    public function tambah_survey($data)
     {
-        # code...
+        $query = $this->db->table('survey')->insert($data);
+        return $query;
+    }
+
+    public function updateSurvey($data, $id_survey)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('id_survey', $id_survey);
+        return $builder->update($data);
     }
 
     public function updateOrInsertSurvey(Survey $survey)

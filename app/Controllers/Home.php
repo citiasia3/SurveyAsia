@@ -8,6 +8,8 @@ use App\Data\User as User;
 class Home extends BaseController
 {
 	protected $userModel;
+	//test push ke branch fadhil
+	//test push ke branch fadhil yg keduaa harus dongg
 
 	public function index()
 	{
