@@ -16,9 +16,12 @@ class Filters extends BaseConfig
 	 * @var array
 	 */
 	public $aliases = [
-		'csrf'     => CSRF::class,
-		'toolbar'  => DebugToolbar::class,
-		'honeypot' => Honeypot::class,
+		'csrf'       => CSRF::class,
+		'toolbar'    => DebugToolbar::class,
+		'honeypot'   => Honeypot::class,
+		'login' 	 => \Myth\Auth\Filters\LoginFilter::class, //fitur filter Myth Auth
+		'role'       => \Myth\Auth\Filters\RoleFilter::class, //fitur role Myth Auth
+		'permission' => \Myth\Auth\Filters\PermissionFilter::class //fitur permission Myth Auth
 	];
 
 	/**

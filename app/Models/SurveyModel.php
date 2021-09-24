@@ -58,7 +58,7 @@ class SurveyModel extends Model
         $this->builder->join('survey_jawaban', 'survey_jawaban.id_survey_pertanyaan = survey_pertanyaan.id_survey_pertanyaan');
 
         /* Mencari ID spesifik */
-        $this->builder->where('survey.id_survey', $id_survey);
+        //$this->builder->where('survey.id_survey', $id_survey);
 
         return $this->builder->get();
     }

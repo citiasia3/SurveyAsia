@@ -3,7 +3,7 @@
 use App\Data\User;
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class SurveyUserModel extends Model
 {
     //informasi tabel
     protected $table = 'user';
@@ -19,6 +19,13 @@ class UserModel extends Model
     protected $useAutoIncrement = true;
     protected $allowedFields = ['id_user', 'username', 'email', 'password', 'first_name', 'last_name', 'role_id', 'is_active'];
     protected $validationRules = [];
+
+    protected $builder;
+
+    public function __construct()
+    {
+        $this->builder = $this->builder();
+    }
 
 
     public function getAllUser()
@@ -45,10 +52,10 @@ class UserModel extends Model
         return $this->insert($user->classToArray());
     }
 
-    public function updateUser(User $user)
+    public function updateUser($idUser, User $user)
     {
         # code...
-        return $this->update($user);
+        return $this->update($idUser, $user->classToArray());
     }
 
     public function updateOrInsert(User $user)
@@ -60,7 +67,7 @@ class UserModel extends Model
     public function deleteUser($id_user)
     {
         # code...
-        return $this->doDelete($id_user);
+        return $this->delete($id_user);
     }
 
     public function getUserRole($id_user)
