@@ -31,7 +31,7 @@ class Survey extends BaseController
     {
         $survey = $this->survey_model->getSurveyById($id)->getRow();
         $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
-        $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
+        // $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
         // foreach ($detailSurveyPertanyaan as $key => $value) {
         // 	# code...
         // 	$array['pertanyaan'] = $value->pertanyaan;

@@ -49,7 +49,7 @@ class SurveyModel extends Model
     {
         # code...
         /* Join Tabel Survey dengan survey_pertanyaan dan survey_jawaban */
-        $this->builder->select('survey.id_survey, survey.deskripsi, survey_pertanyaan.id_survey_pertanyaan, survey_pertanyaan.pertanyaan, survey_jawaban.id_survey_jawaban, survey_jawaban.isi_jawaban, survey_jawaban.id_responden');
+        $this->builder->select('survey.id_survey, survey.deskripsi,survey.judul, survey_pertanyaan.id_survey_pertanyaan, survey_pertanyaan.pertanyaan, survey_jawaban.id_survey_jawaban, survey_jawaban.isi_jawaban, survey_jawaban.id_responden');
 
         //$builder->from($this->table);
 

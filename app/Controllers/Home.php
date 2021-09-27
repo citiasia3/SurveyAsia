@@ -74,15 +74,23 @@ class Home extends BaseController
 	private function showTestData(bool $showJson = false)
 	{
 		# code...
-		// $detailSurvey = $this->surveyModel->detailSurvey(1)->getResult();
-		// $detailJawaban = $this->surveyJawabanModel->detailJawaban(1)->getResult();
+		$detailSurvey = $this->surveyModel->detailSurvey(1)->getResult();
+		$detailJawaban = $this->surveyJawabanModel->detailJawaban(1)->getResult();
 
+		// $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban(1)->getResult();
+		// foreach ($detailSurveyPertanyaan as $key => $value) {
+		// 	# code...
+		// 	$array['pertanyaan'] = $value->pertanyaan;
+		// 	// $array['survey_desc'] = $value->deskripsi;
+		// 	$array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
+		// }
 		$detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban(1)->getResult();
-		foreach ($detailSurveyPertanyaan as $key => $value) {
+		foreach ($detailSurvey as $key => $value) {
 			# code...
-			$array['pertanyaan'] = $value->pertanyaan;
+			$array['judul_survey'] = $value->judul;
+			$array['pertanyaan'][$value->pertanyaan] = $value->isi_jawaban;
 			// $array['survey_desc'] = $value->deskripsi;
-			$array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
+			// $array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
 		}
 
 		if ($showJson) {

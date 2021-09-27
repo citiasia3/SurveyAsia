@@ -31,18 +31,19 @@
 
 var exampleModal = document.getElementById('modalEditPertanyaan')
 exampleModal.addEventListener('show.bs.modal', function (event) {
+    // get dta pertanyaan
     var button = event.relatedTarget
     var id_survey_pertanyaan = button.getAttribute('data-bs-whatever')
     var pertanyaan = button.getAttribute('data-pertanyaan')
-
+    // isi value
     var inputId = document.getElementById('idPertanyaan')
     var inputPertanyaan = document.getElementById('pertanyaan')
 
     inputId.value = id_survey_pertanyaan
     inputPertanyaan.value = pertanyaan
     // const idPertanyaan = document.getAttribute('data-id')
-    console.log(pertanyaan)
-    console.log(id_survey_pertanyaan)
+    // console.log(pertanyaan)
+    // console.log(id_survey_pertanyaan)
 })
 
 
