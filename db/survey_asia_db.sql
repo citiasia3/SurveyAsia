@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2021 at 08:44 AM
+-- Generation Time: Sep 27, 2021 at 07:51 AM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.31
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,185 @@ SET time_zone = "+00:00";
 --
 -- Database: `survey_asia_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_activation_attempts`
+--
+
+CREATE TABLE `auth_activation_attempts` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `ip_address` varchar(255) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_groups`
+--
+
+CREATE TABLE `auth_groups` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `auth_groups`
+--
+
+INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
+(1, 'admin', 'Mengontrol website'),
+(2, 'creator', 'Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank'),
+(3, 'responden', 'Responden adalah actor yang mengisi survey dan mendapatkan komisi'),
+(4, 'fadil', 'contoh deskripsi');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_groups_permissions`
+--
+
+CREATE TABLE `auth_groups_permissions` (
+  `group_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `permission_id` int(11) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `auth_groups_permissions`
+--
+
+INSERT INTO `auth_groups_permissions` (`group_id`, `permission_id`) VALUES
+(2, 1),
+(2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_groups_users`
+--
+
+CREATE TABLE `auth_groups_users` (
+  `group_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `auth_groups_users`
+--
+
+INSERT INTO `auth_groups_users` (`group_id`, `user_id`) VALUES
+(1, 2),
+(2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_logins`
+--
+
+CREATE TABLE `auth_logins` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `user_id` int(11) UNSIGNED DEFAULT NULL,
+  `date` datetime NOT NULL,
+  `success` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `auth_logins`
+--
+
+INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `success`) VALUES
+(1, '::1', 'fa', NULL, '2021-09-22 23:31:24', 0),
+(2, '::1', 'fahlevi@gmail.com', NULL, '2021-09-22 23:42:37', 0),
+(3, '::1', 'tes@gmail.com', 1, '2021-09-22 23:44:05', 1),
+(4, '::1', 'tes@gmail.com', NULL, '2021-09-23 22:09:26', 0),
+(5, '::1', 'tes@gmail.com', NULL, '2021-09-23 22:09:37', 0),
+(6, '::1', 'contoh@gmail.com', 2, '2021-09-23 22:09:54', 1),
+(7, '::1', 'contoh@gmail.com', 2, '2021-09-24 02:17:20', 1),
+(8, '::1', 'contoh@gmail.com', 2, '2021-09-26 02:08:51', 1),
+(9, '::1', 'contoh@gmail.com', 2, '2021-09-26 02:26:37', 1),
+(10, '::1', 'contoh@gmail.com', 2, '2021-09-26 22:11:28', 1),
+(11, '::1', 'creator1@gmail.com', 4, '2021-09-27 01:12:44', 1),
+(12, '::1', 'responden1@gmail.com', 3, '2021-09-27 01:36:15', 1),
+(13, '::1', 'responden1@gmail.com', 3, '2021-09-27 01:45:18', 1),
+(14, '::1', 'creator1@gmail.com', 4, '2021-09-27 01:45:53', 1),
+(15, '::1', 'responden1@gmail.com', 3, '2021-09-27 01:47:06', 1),
+(16, '::1', 'creator1@gmail.com', 4, '2021-09-27 01:52:37', 1),
+(17, '::1', 'creator1@gmail.com', 4, '2021-09-27 02:09:09', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_permissions`
+--
+
+CREATE TABLE `auth_permissions` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `auth_permissions`
+--
+
+INSERT INTO `auth_permissions` (`id`, `name`, `description`) VALUES
+(1, 'manage_survey', 'Memperbolehkan user untuk membuat, mengakses, mengubah, dan menghapus survey.'),
+(2, 'isi_survey', 'Memperbolehkan user untuk mengisi survey.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_reset_attempts`
+--
+
+CREATE TABLE `auth_reset_attempts` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `ip_address` varchar(255) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_tokens`
+--
+
+CREATE TABLE `auth_tokens` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `selector` varchar(255) NOT NULL,
+  `hashedValidator` varchar(255) NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `expires` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_users_permissions`
+--
+
+CREATE TABLE `auth_users_permissions` (
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `permission_id` int(11) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `auth_users_permissions`
+--
+
+INSERT INTO `auth_users_permissions` (`user_id`, `permission_id`) VALUES
+(4, 1);
 
 -- --------------------------------------------------------
 
@@ -56,6 +235,32 @@ CREATE TABLE `komisi` (
   `waktu` date NOT NULL,
   `id_studi` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `version` varchar(255) NOT NULL,
+  `class` varchar(255) NOT NULL,
+  `group` varchar(255) NOT NULL,
+  `namespace` varchar(255) NOT NULL,
+  `time` int(11) NOT NULL,
+  `batch` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
+(1, '2017-11-20-223112', 'Myth\\Auth\\Database\\Migrations\\CreateAuthTables', 'default', 'Myth\\Auth', 1632297078, 1),
+(2, '2017-11-20-223112', 'App\\Database\\Migrations\\CreateAuthTables', 'default', 'App', 1632727594, 2),
+(3, '2021-09-22-065421', 'App\\Database\\Migrations\\Survey', 'default', 'App', 1632727594, 2),
+(4, '2021-09-27-071947', 'App\\Database\\Migrations\\CreateTabelUserProfile', 'default', 'App', 1632727595, 2);
 
 -- --------------------------------------------------------
 
@@ -220,7 +425,7 @@ CREATE TABLE `survey` (
 
 INSERT INTO `survey` (`id_survey`, `judul`, `deskripsi`, `jumlah_responden`, `created_at`, `updated_at`) VALUES
 (1, 'membuat survey', 'ini adalah deskripsi', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'test', 'test', 0, '2021-09-19 01:43:39', '2021-09-19 01:43:39');
+(2, 'Survey Kedua', 'test', 0, '2021-09-19 01:43:39', '2021-09-19 01:43:39');
 
 -- --------------------------------------------------------
 
@@ -276,7 +481,10 @@ CREATE TABLE `survey_pertanyaan` (
 
 INSERT INTO `survey_pertanyaan` (`id_survey_pertanyaan`, `id_survey`, `pertanyaan`, `tipe`) VALUES
 (1, 1, 'apakah anda tinggi?', 1),
-(2, 1, 'bagaimana pendapat anda?', 0);
+(2, 1, 'bagaimana pendapat anda?', 0),
+(3, 6, 'Berapa umur anda?', 1),
+(4, 6, 'Punya uang berapa?', 1),
+(5, 2, 'Apakah anda sehat?', 1);
 
 -- --------------------------------------------------------
 
@@ -301,11 +509,16 @@ CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `alamat` varchar(100) DEFAULT NULL,
   `first_name` varchar(15) DEFAULT NULL,
   `last_name` varchar(15) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `email` varchar(15) DEFAULT NULL,
+  `nomor_hp` varchar(15) DEFAULT '0',
+  `file_ktp` varchar(100) DEFAULT NULL,
+  `file_profile` varchar(100) DEFAULT NULL,
+  `nomor_rekening` varchar(100) DEFAULT NULL,
   `role_id` int(11) NOT NULL,
   `is_active` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
@@ -314,8 +527,60 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `username`, `password`, `first_name`, `last_name`, `created_at`, `updated_at`, `email`, `role_id`, `is_active`) VALUES
-(14, 'test', '$2y$10$qItTNvNe/T7Aj7fTnfnPtuLLwmLGkLfM.cW6iRpNxi0UF4grUd7Va', 'iam', 'legend', '2021-09-19 01:43:39', '2021-09-19 01:43:39', NULL, 1, 1);
+INSERT INTO `user` (`id_user`, `username`, `password`, `alamat`, `first_name`, `last_name`, `created_at`, `updated_at`, `email`, `nomor_hp`, `file_ktp`, `file_profile`, `nomor_rekening`, `role_id`, `is_active`) VALUES
+(0, 'test1', '$2y$10$UeEkHDjQ5dCXzCNBg5oFR.24HUGKJmh8KEMCqbbYPWdSjZomOc.hm', NULL, 'iam1', 'legend1', '2021-09-21 01:30:07', '2021-09-21 01:35:16', 'test1', '0', NULL, NULL, NULL, 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `reset_hash` varchar(255) DEFAULT NULL,
+  `reset_at` datetime DEFAULT NULL,
+  `reset_expires` datetime DEFAULT NULL,
+  `activate_hash` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `status_message` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `force_pass_reset` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `id_user_profile` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `username`, `password_hash`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`, `id_user_profile`) VALUES
+(1, 'tes@gmail.com', 'tes', '$2y$10$ehdOWkIj4.Dj4/OO.3UPdO38IpEDCezap/h3CPT83E10tAV6eFijW', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-09-22 23:43:50', '2021-09-22 23:43:50', NULL, NULL),
+(2, 'contoh@gmail.com', 'contoh', '$2y$10$wA39TdQVy/qVZqWNBkUDZesIaOya1kmjU1BQeO.uHA5WzV50EN4la', 'b3a0d7930cfe0a2c94b97794a8a24e3e', NULL, '2021-09-24 03:05:34', NULL, NULL, NULL, 1, 0, '2021-09-23 22:09:05', '2021-09-24 02:05:34', NULL, NULL),
+(3, 'responden1@gmail.com', 'responden1', '$2y$10$TBw7vRA9rWiMx41SWD4D7ebzdYiG.s2txsYeuec47SNt5WmjVsJXG', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-09-27 01:11:52', '2021-09-27 01:11:52', NULL, NULL),
+(4, 'creator1@gmail.com', 'creator1', '$2y$10$l9MoaiMPufurB23Uih.kFOSaFeY2.0kflKTQ/Mm6JCLgQJYC/gWda', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-09-27 01:12:11', '2021-09-27 01:12:11', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_profile`
+--
+
+CREATE TABLE `user_profile` (
+  `id_user_profile` int(11) UNSIGNED NOT NULL,
+  `first_name` varchar(15) DEFAULT NULL,
+  `last_name` varchar(15) DEFAULT NULL,
+  `alamat` varchar(50) DEFAULT NULL,
+  `nomor_hp` varchar(13) DEFAULT NULL,
+  `file_ktp` varchar(100) DEFAULT NULL,
+  `nomor_rekening` varchar(16) DEFAULT NULL,
+  `foto_profile` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -340,6 +605,67 @@ INSERT INTO `user_roles` (`role_id`, `role`) VALUES
 --
 
 --
+-- Indexes for table `auth_activation_attempts`
+--
+ALTER TABLE `auth_activation_attempts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auth_groups`
+--
+ALTER TABLE `auth_groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auth_groups_permissions`
+--
+ALTER TABLE `auth_groups_permissions`
+  ADD KEY `auth_groups_permissions_permission_id_foreign` (`permission_id`),
+  ADD KEY `group_id_permission_id` (`group_id`,`permission_id`);
+
+--
+-- Indexes for table `auth_groups_users`
+--
+ALTER TABLE `auth_groups_users`
+  ADD KEY `auth_groups_users_user_id_foreign` (`user_id`),
+  ADD KEY `group_id_user_id` (`group_id`,`user_id`);
+
+--
+-- Indexes for table `auth_logins`
+--
+ALTER TABLE `auth_logins`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email` (`email`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `auth_permissions`
+--
+ALTER TABLE `auth_permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auth_reset_attempts`
+--
+ALTER TABLE `auth_reset_attempts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auth_tokens`
+--
+ALTER TABLE `auth_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auth_tokens_user_id_foreign` (`user_id`),
+  ADD KEY `selector` (`selector`);
+
+--
+-- Indexes for table `auth_users_permissions`
+--
+ALTER TABLE `auth_users_permissions`
+  ADD KEY `auth_users_permissions_permission_id_foreign` (`permission_id`),
+  ADD KEY `user_id_permission_id` (`user_id`,`permission_id`);
+
+--
 -- Indexes for table `creators`
 --
 ALTER TABLE `creators`
@@ -351,6 +677,12 @@ ALTER TABLE `creators`
 ALTER TABLE `komisi`
   ADD PRIMARY KEY (`id_komisi`),
   ADD KEY `id_studi` (`id_studi`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `news`
@@ -458,6 +790,21 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `id_user_profile` (`id_user_profile`);
+
+--
+-- Indexes for table `user_profile`
+--
+ALTER TABLE `user_profile`
+  ADD PRIMARY KEY (`id_user_profile`);
+
+--
 -- Indexes for table `user_roles`
 --
 ALTER TABLE `user_roles`
@@ -466,6 +813,48 @@ ALTER TABLE `user_roles`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `auth_activation_attempts`
+--
+ALTER TABLE `auth_activation_attempts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `auth_groups`
+--
+ALTER TABLE `auth_groups`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `auth_logins`
+--
+ALTER TABLE `auth_logins`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `auth_permissions`
+--
+ALTER TABLE `auth_permissions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `auth_reset_attempts`
+--
+ALTER TABLE `auth_reset_attempts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `auth_tokens`
+--
+ALTER TABLE `auth_tokens`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `reports`
@@ -477,7 +866,7 @@ ALTER TABLE `reports`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `id_survey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_survey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `survey_jawaban`
@@ -489,17 +878,56 @@ ALTER TABLE `survey_jawaban`
 -- AUTO_INCREMENT for table `survey_pertanyaan`
 --
 ALTER TABLE `survey_pertanyaan`
-  MODIFY `id_survey_pertanyaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_survey_pertanyaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `user_profile`
+--
+ALTER TABLE `user_profile`
+  MODIFY `id_user_profile` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `auth_groups_permissions`
+--
+ALTER TABLE `auth_groups_permissions`
+  ADD CONSTRAINT `auth_groups_permissions_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `auth_groups` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `auth_groups_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `auth_permissions` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `auth_groups_users`
+--
+ALTER TABLE `auth_groups_users`
+  ADD CONSTRAINT `auth_groups_users_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `auth_groups` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `auth_groups_users_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `auth_tokens`
+--
+ALTER TABLE `auth_tokens`
+  ADD CONSTRAINT `auth_tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `auth_users_permissions`
+--
+ALTER TABLE `auth_users_permissions`
+  ADD CONSTRAINT `auth_users_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `auth_permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `auth_users_permissions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `komisi`
