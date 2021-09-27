@@ -37,6 +37,13 @@ class SurveyPertanyaanModel extends Model
         return $this->builder->getWhere(['id_survey' => $idSurvey]);
     }
 
+    public function countPertanyaan($id)
+    {
+        # code...
+        $this->builder->where('id_survey', $id);
+        return $this->builder->countAllResults();
+    }
+
     public function tambah_pertanyaan($data)
     {
         $query = $this->db->table('survey_pertanyaan')->insert($data);

@@ -4,39 +4,41 @@ namespace App\Controllers;
 
 use App\Data\Survey;
 use App\Data\User as User;
-use SurveyJawabanModel;
-use SurveyModel;
-use SurveyPertanyaanModel;
-use UserModel;
 
 class Home extends BaseController
 {
-	protected $surveyModel;
-	protected $surveyPertanyaanModel;
-	protected $surveyJawabanModel;
 	protected $userModel;
-	//test push ke branch fadhil
-	//test push ke branch fadhil yg keduaa harus dongg
-
-	public function __construct()
-	{
-		$this->surveyModel = new SurveyModel();
-		$this->surveyPertanyaanModel = new SurveyPertanyaanModel();
-		$this->surveyJawabanModel = new SurveyJawabanModel();
-		$this->userModel = new UserModel();
-	}
 
 	public function index()
 	{
-		$data = [
-			'title' => 'Dashboard',
+		/* $this->type_satu(1,false); */
+		//$this->testDeleteUser(20);
+		//$this->testInsertUser();
+		//$this->testUpdateUser(21);
+		/* echo 'home';
+		echo '<br><br><br><a href="">logout</a>'; */
 
+		/* $auth = service('authorization');
+		$auth->addPermissionToUser('manage_survey', 4); */
+
+		$data = [
+			'title' => 'Dashboard'
 		];
 
-		$this->showTestData();
-
-		// var_dump($survey);
 		return view('home/index', $data);
+		/* $user = $this->auth->user();
+		$check = $this->auth->check();
+
+		$this->prettyVarDump($check,'user'); */
+
+		/* $this->type_satu(1, true);
+		$this->type_dua(true); */
+	}
+
+	public function dashboard()
+	{
+		# code...
+		echo 'dashboard';
 	}
 
 	private function testInsertUser()
@@ -57,6 +59,35 @@ class Home extends BaseController
 		$this->prettyVarDump($insert, 'User Insert Test');
 	}
 
+	private function testDeleteUser($id_user)
+	{
+		# code...
+		$delete = $this->userModel->deleteUser($id_user);
+		if ($delete->connID->affected_rows > 0) {
+			# code...
+			echo 'User deleted! id = ' . $id_user;
+		} else {
+			echo 'Test Fail';
+		}
+	}
+
+	private function testUpdateUser($id_user)
+	{
+		# code...
+		$user = new User();
+		$user->idUser = $id_user;
+		$user->username = 'test';
+		$user->email = 'test';
+		$user->firstName = 'iam';
+		$user->lastName = 'legend';
+		$user->password = password_hash('test', PASSWORD_DEFAULT);
+		$user->roleId = '1';
+		$user->isActive = '1';
+
+		$update = $this->userModel->updateUser($id_user, $user);
+		$this->prettyVarDump($update, 'Test Update');
+	}
+
 	private function testInsertSurvey()
 	{
 		# code...
@@ -71,36 +102,75 @@ class Home extends BaseController
 		$this->prettyVarDump($insert, 'Survey Input Test');
 	}
 
-	private function showTestData(bool $showJson = false)
+	private function type_dua(bool $showJson)
 	{
 		# code...
-		$detailSurvey = $this->surveyModel->detailSurvey(1)->getResult();
-		$detailJawaban = $this->surveyJawabanModel->detailJawaban(1)->getResult();
+		$allSurvey = $this->surveyModel->getAllSurvey()->getResult();
 
-		// $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban(1)->getResult();
-		// foreach ($detailSurveyPertanyaan as $key => $value) {
-		// 	# code...
-		// 	$array['pertanyaan'] = $value->pertanyaan;
-		// 	// $array['survey_desc'] = $value->deskripsi;
-		// 	$array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
-		// }
-		$detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban(1)->getResult();
-		foreach ($detailSurvey as $key => $value) {
+		$num = 0;
+		foreach ($allSurvey as $key => $value) {
 			# code...
-			$array['judul_survey'] = $value->judul;
-			$array['pertanyaan'][$value->pertanyaan] = $value->isi_jawaban;
-			// $array['survey_desc'] = $value->deskripsi;
-			// $array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
+			$data[$num]['id_survey'] = $value->id_survey;
+			$data[$num]['judul'] = $value->judul;
+			$data[$num]['deskripsi'] = $value->deskripsi;
+			$data[$num]['jml_responden'] = $value->jumlah_responden;
+			$data[$num]['pertanyaan'] = [];
+			$listPertanyaan = $this->surveyPertanyaanModel->getPertanyaanBySurveyId($value->id_survey)->getResultArray();
+			$count = $this->surveyPertanyaanModel->countPertanyaan($value->id_survey);
+			//$this->prettyVarDump($listPertanyaan, 'List Pertanyaan');
+			$data[$num]['jml_pertanyaan'] = $count;
+			if ($listPertanyaan != null) {
+				# code...
+				$num2 = 0;
+				foreach ($listPertanyaan as $mkey => $mvalue) {
+					# code...
+					$pertanyaan[$mkey] = $mvalue;
+					$data[$num]['pertanyaan'] = $pertanyaan;
+					//$listJawaban = $this->;
+
+					$num2++;
+				}
+			}
+			$num++;
 		}
 
+		//cara akses array diatas
+		/* foreach ($data as $key => $value) {
+			# code...
+			foreach ($value as $mkey => $mvalue) {
+				# code...
+				
+				$this->prettyVarDump($mvalue,'tes');
+				if ($mkey == 'pertanyaan') {
+					# code...
+					foreach ($mvalue as $xkey => $xvalue) {
+						# code...
+						
+					}
+				}
+			}
+		} */
+
 		if ($showJson) {
-			echo 'Detail Survey Mode JSON';
-			// echo '<pre>' . json_encode($detailJawaban, JSON_PRETTY_PRINT) . '</pre>';
+			$this->prettyVarDump(json_encode($data, JSON_PRETTY_PRINT), 'All Survey JSON');
+			return;
+		}
+
+		$this->prettyVarDump($data, 'All Survey');
+	}
+
+	private function type_satu($id_survey, bool $showJson = false)
+	{
+		# code...
+		$detailSurvey = $this->surveyModel->detailSurvey($id_survey)->getResultArray();
+
+
+		if ($showJson) {
+			$this->prettyVarDump(json_encode($detailSurvey, JSON_PRETTY_PRINT), 'Detail Survey');
 			return;
 		}
 
 
-		$this->prettyVarDump($array, 'Detail Survey');
-		// $this->prettyVarDump($detailJawaban, 'Detail Survey Jawaban');
+		$this->prettyVarDump($detailSurvey, 'Detail Survey');
 	}
 }

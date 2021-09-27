@@ -1,70 +1,127 @@
-<?php
+<?php namespace App\Models;
 
-use App\Data\User;
 use CodeIgniter\Model;
+use Myth\Auth\Authorization\GroupModel;
+use Myth\Auth\Entities\User;
 
+/**
+ * Auto generate from auth library
+ */
 class UserModel extends Model
 {
-    //informasi tabel
-    protected $table = 'user';
-    protected $primaryKey = 'id_user';
+    protected $table = 'users';
+    protected $primaryKey = 'id';
 
-    //pencatatan waktu dan tanggal
+    protected $returnType = 'App\Entities\User';
+    protected $useSoftDeletes = true;
+
+    protected $allowedFields = [
+        'email', 'username', 'password_hash', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
+        'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at',
+    ];
+
     protected $useTimestamps = true;
-    protected $dateFormat = 'datetime';
-    protected $createdField = 'created_at';
-    protected $updatedField = 'updated_at';
 
-    //informasi field
-    protected $useAutoIncrement = true;
-    protected $allowedFields = ['id_user', 'username', 'email', 'password', 'first_name', 'last_name', 'role_id', 'is_active'];
-    protected $validationRules = [];
+    protected $validationRules = [
+        'email'         => 'required|valid_email|is_unique[users.email,id,{id}]',
+        'username'      => 'required|alpha_numeric_punct|min_length[3]|max_length[30]|is_unique[users.username,id,{id}]',
+        'password_hash' => 'required',
+    ];
+    protected $validationMessages = [];
+    protected $skipValidation = false;
 
+    protected $afterInsert = ['addToGroup'];
 
-    public function getAllUser()
+    /**
+     * The id of a group to assign.
+     * Set internally by withGroup.
+     *
+     * @var int|null
+     */
+    protected $assignGroup;
+
+    /**
+     * Logs a password reset attempt for posterity sake.
+     *
+     * @param string      $email
+     * @param string|null $token
+     * @param string|null $ipAddress
+     * @param string|null $userAgent
+     */
+    public function logResetAttempt(string $email, string $token = null, string $ipAddress = null, string $userAgent = null)
     {
-        # untuk menampilkan semua user
-        return $this->builder->get();
-    }
-
-
-    public function getUserById(bool $singleResult, $idUser)
-    {
-        # code...
-        return $this->doFind($singleResult, $idUser);
+        $this->db->table('auth_reset_attempts')->insert([
+            'email' => $email,
+            'ip_address' => $ipAddress,
+            'user_agent' => $userAgent,
+            'token' => $token,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
     }
 
     /**
-     *  fungsi ini akan memasukkan user kedalam database
-     * 
-     * @param User $user berisi data user yang akan dimasukkan kedalam database
-     * @return int mengembalikan user ID yang berhasil dibuat
+     * Logs an activation attempt for posterity sake.
+     *
+     * @param string|null $token
+     * @param string|null $ipAddress
+     * @param string|null $userAgent
      */
-    public function insertUser(User $user)
+    public function logActivationAttempt(string $token = null, string $ipAddress = null, string $userAgent = null)
     {
-        return $this->insert($user->classToArray());
+        $this->db->table('auth_activation_attempts')->insert([
+            'ip_address' => $ipAddress,
+            'user_agent' => $userAgent,
+            'token' => $token,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
     }
 
-    public function updateUser(User $user)
+    /**
+     * Sets the group to assign any users created.
+     *
+     * @param string $groupName
+     *
+     * @return $this
+     */
+    public function withGroup(string $groupName)
     {
-        # code...
-        return $this->update($user);
+        $group = $this->db->table('auth_groups')->where('name', $groupName)->get()->getFirstRow();
+
+        $this->assignGroup = $group->id;
+
+        return $this;
     }
 
-    public function updateOrInsert(User $user)
+    /**
+     * Clears the group to assign to newly created users.
+     *
+     * @return $this
+     */
+    public function clearGroup()
     {
-        # code...
-        return $this->shouldUpdate($user);
+        $this->assignGroup = null;
+
+        return $this;
     }
 
-    public function deleteUser($id_user)
+    /**
+     * If a default role is assigned in Config\Auth, will
+     * add this user to that group. Will do nothing
+     * if the group cannot be found.
+     *
+     * @param mixed $data
+     *
+     * @return mixed
+     */
+    protected function addToGroup($data)
     {
-        # code...
-        return $this->doDelete($id_user);
+        if (is_numeric($this->assignGroup))
+        {
+            $groupModel = model(GroupModel::class);
+            $groupModel->addUserToGroup($data['id'], $this->assignGroup);
+        }
+
+        return $data;
     }
 
-    public function getUserRole($id_user)
-    {
-        # code...
-    }
 }

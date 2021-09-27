@@ -9,6 +9,7 @@
                 <a class="nav-link  " href="/">Dashboard <span class="sr-only"></span></a>
                 <a class="nav-link  " href="/survey">Survey <span class="sr-only"><span></a>
                 <a class="nav-link  " href="#">Templates <span class="sr-only"></span></a>
+                <a class="nav-link  " href="/manage">Manage <span class="sr-only"></span></a>
             </div>
         </div>
     </div>

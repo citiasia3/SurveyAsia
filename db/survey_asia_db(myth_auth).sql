@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2021 at 07:51 AM
+-- Generation Time: Sep 22, 2021 at 08:01 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 8.0.11
 
@@ -47,16 +47,6 @@ CREATE TABLE `auth_groups` (
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `auth_groups`
---
-
-INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
-(1, 'admin', 'Mengontrol website'),
-(2, 'creator', 'Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank'),
-(3, 'responden', 'Responden adalah actor yang mengisi survey dan mendapatkan komisi'),
-(4, 'fadil', 'contoh deskripsi');
-
 -- --------------------------------------------------------
 
 --
@@ -68,14 +58,6 @@ CREATE TABLE `auth_groups_permissions` (
   `permission_id` int(11) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `auth_groups_permissions`
---
-
-INSERT INTO `auth_groups_permissions` (`group_id`, `permission_id`) VALUES
-(2, 1),
-(2, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -86,14 +68,6 @@ CREATE TABLE `auth_groups_users` (
   `group_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `auth_groups_users`
---
-
-INSERT INTO `auth_groups_users` (`group_id`, `user_id`) VALUES
-(1, 2),
-(2, 1);
 
 -- --------------------------------------------------------
 
@@ -110,29 +84,6 @@ CREATE TABLE `auth_logins` (
   `success` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `auth_logins`
---
-
-INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `success`) VALUES
-(1, '::1', 'fa', NULL, '2021-09-22 23:31:24', 0),
-(2, '::1', 'fahlevi@gmail.com', NULL, '2021-09-22 23:42:37', 0),
-(3, '::1', 'tes@gmail.com', 1, '2021-09-22 23:44:05', 1),
-(4, '::1', 'tes@gmail.com', NULL, '2021-09-23 22:09:26', 0),
-(5, '::1', 'tes@gmail.com', NULL, '2021-09-23 22:09:37', 0),
-(6, '::1', 'contoh@gmail.com', 2, '2021-09-23 22:09:54', 1),
-(7, '::1', 'contoh@gmail.com', 2, '2021-09-24 02:17:20', 1),
-(8, '::1', 'contoh@gmail.com', 2, '2021-09-26 02:08:51', 1),
-(9, '::1', 'contoh@gmail.com', 2, '2021-09-26 02:26:37', 1),
-(10, '::1', 'contoh@gmail.com', 2, '2021-09-26 22:11:28', 1),
-(11, '::1', 'creator1@gmail.com', 4, '2021-09-27 01:12:44', 1),
-(12, '::1', 'responden1@gmail.com', 3, '2021-09-27 01:36:15', 1),
-(13, '::1', 'responden1@gmail.com', 3, '2021-09-27 01:45:18', 1),
-(14, '::1', 'creator1@gmail.com', 4, '2021-09-27 01:45:53', 1),
-(15, '::1', 'responden1@gmail.com', 3, '2021-09-27 01:47:06', 1),
-(16, '::1', 'creator1@gmail.com', 4, '2021-09-27 01:52:37', 1),
-(17, '::1', 'creator1@gmail.com', 4, '2021-09-27 02:09:09', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -144,14 +95,6 @@ CREATE TABLE `auth_permissions` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `auth_permissions`
---
-
-INSERT INTO `auth_permissions` (`id`, `name`, `description`) VALUES
-(1, 'manage_survey', 'Memperbolehkan user untuk membuat, mengakses, mengubah, dan menghapus survey.'),
-(2, 'isi_survey', 'Memperbolehkan user untuk mengisi survey.');
 
 -- --------------------------------------------------------
 
@@ -192,13 +135,6 @@ CREATE TABLE `auth_users_permissions` (
   `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `permission_id` int(11) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `auth_users_permissions`
---
-
-INSERT INTO `auth_users_permissions` (`user_id`, `permission_id`) VALUES
-(4, 1);
 
 -- --------------------------------------------------------
 
@@ -257,10 +193,7 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
-(1, '2017-11-20-223112', 'Myth\\Auth\\Database\\Migrations\\CreateAuthTables', 'default', 'Myth\\Auth', 1632297078, 1),
-(2, '2017-11-20-223112', 'App\\Database\\Migrations\\CreateAuthTables', 'default', 'App', 1632727594, 2),
-(3, '2021-09-22-065421', 'App\\Database\\Migrations\\Survey', 'default', 'App', 1632727594, 2),
-(4, '2021-09-27-071947', 'App\\Database\\Migrations\\CreateTabelUserProfile', 'default', 'App', 1632727595, 2);
+(1, '2017-11-20-223112', 'Myth\\Auth\\Database\\Migrations\\CreateAuthTables', 'default', 'Myth\\Auth', 1632297078, 1);
 
 -- --------------------------------------------------------
 
@@ -425,7 +358,10 @@ CREATE TABLE `survey` (
 
 INSERT INTO `survey` (`id_survey`, `judul`, `deskripsi`, `jumlah_responden`, `created_at`, `updated_at`) VALUES
 (1, 'membuat survey', 'ini adalah deskripsi', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'Survey Kedua', 'test', 0, '2021-09-19 01:43:39', '2021-09-19 01:43:39');
+(2, 'test', 'test', 0, '2021-09-19 01:43:39', '2021-09-19 01:43:39'),
+(3, 'test', 'test', 0, '2021-09-19 21:20:30', '2021-09-19 21:20:30'),
+(4, 'test', 'test', 0, '2021-09-20 04:11:40', '2021-09-20 04:11:40'),
+(5, 'test', 'test', 0, '2021-09-20 07:48:21', '2021-09-20 07:48:21');
 
 -- --------------------------------------------------------
 
@@ -481,10 +417,7 @@ CREATE TABLE `survey_pertanyaan` (
 
 INSERT INTO `survey_pertanyaan` (`id_survey_pertanyaan`, `id_survey`, `pertanyaan`, `tipe`) VALUES
 (1, 1, 'apakah anda tinggi?', 1),
-(2, 1, 'bagaimana pendapat anda?', 0),
-(3, 6, 'Berapa umur anda?', 1),
-(4, 6, 'Punya uang berapa?', 1),
-(5, 2, 'Apakah anda sehat?', 1);
+(2, 1, 'bagaimana pendapat anda?', 0);
 
 -- --------------------------------------------------------
 
@@ -551,35 +484,7 @@ CREATE TABLE `users` (
   `force_pass_reset` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `id_user_profile` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `email`, `username`, `password_hash`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`, `id_user_profile`) VALUES
-(1, 'tes@gmail.com', 'tes', '$2y$10$ehdOWkIj4.Dj4/OO.3UPdO38IpEDCezap/h3CPT83E10tAV6eFijW', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-09-22 23:43:50', '2021-09-22 23:43:50', NULL, NULL),
-(2, 'contoh@gmail.com', 'contoh', '$2y$10$wA39TdQVy/qVZqWNBkUDZesIaOya1kmjU1BQeO.uHA5WzV50EN4la', 'b3a0d7930cfe0a2c94b97794a8a24e3e', NULL, '2021-09-24 03:05:34', NULL, NULL, NULL, 1, 0, '2021-09-23 22:09:05', '2021-09-24 02:05:34', NULL, NULL),
-(3, 'responden1@gmail.com', 'responden1', '$2y$10$TBw7vRA9rWiMx41SWD4D7ebzdYiG.s2txsYeuec47SNt5WmjVsJXG', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-09-27 01:11:52', '2021-09-27 01:11:52', NULL, NULL),
-(4, 'creator1@gmail.com', 'creator1', '$2y$10$l9MoaiMPufurB23Uih.kFOSaFeY2.0kflKTQ/Mm6JCLgQJYC/gWda', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-09-27 01:12:11', '2021-09-27 01:12:11', NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_profile`
---
-
-CREATE TABLE `user_profile` (
-  `id_user_profile` int(11) UNSIGNED NOT NULL,
-  `first_name` varchar(15) DEFAULT NULL,
-  `last_name` varchar(15) DEFAULT NULL,
-  `alamat` varchar(50) DEFAULT NULL,
-  `nomor_hp` varchar(13) DEFAULT NULL,
-  `file_ktp` varchar(100) DEFAULT NULL,
-  `nomor_rekening` varchar(16) DEFAULT NULL,
-  `foto_profile` varchar(100) DEFAULT NULL
+  `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -795,14 +700,7 @@ ALTER TABLE `user`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `id_user_profile` (`id_user_profile`);
-
---
--- Indexes for table `user_profile`
---
-ALTER TABLE `user_profile`
-  ADD PRIMARY KEY (`id_user_profile`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `user_roles`
@@ -824,19 +722,19 @@ ALTER TABLE `auth_activation_attempts`
 -- AUTO_INCREMENT for table `auth_groups`
 --
 ALTER TABLE `auth_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `auth_permissions`
 --
 ALTER TABLE `auth_permissions`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `auth_reset_attempts`
@@ -854,7 +752,7 @@ ALTER TABLE `auth_tokens`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reports`
@@ -866,7 +764,7 @@ ALTER TABLE `reports`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `id_survey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_survey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `survey_jawaban`
@@ -878,7 +776,7 @@ ALTER TABLE `survey_jawaban`
 -- AUTO_INCREMENT for table `survey_pertanyaan`
 --
 ALTER TABLE `survey_pertanyaan`
-  MODIFY `id_survey_pertanyaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_survey_pertanyaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -890,13 +788,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `user_profile`
---
-ALTER TABLE `user_profile`
-  MODIFY `id_user_profile` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
