@@ -8,12 +8,6 @@ use App\Data\User as User;
 class Home extends BaseController
 {
 	protected $userModel;
-	private $auth;
-
-	public function __construct()
-	{
-		$this->auth = service('authentication');
-	}
 
 	public function index()
 	{
@@ -24,18 +18,21 @@ class Home extends BaseController
 		/* echo 'home';
 		echo '<br><br><br><a href="">logout</a>'; */
 
-		/* $data = [
+		/* $auth = service('authorization');
+		$auth->addPermissionToUser('manage_survey', 4); */
+
+		$data = [
 			'title' => 'Dashboard'
 		];
 
-		return view('home/index', $data); */
+		return view('home/index', $data);
 		/* $user = $this->auth->user();
 		$check = $this->auth->check();
 
 		$this->prettyVarDump($check,'user'); */
 
-		$this->type_satu(1, true);
-		$this->type_dua(true);
+		/* $this->type_satu(1, true);
+		$this->type_dua(true); */
 	}
 
 	public function dashboard()
