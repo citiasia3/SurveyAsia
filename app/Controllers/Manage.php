@@ -18,7 +18,12 @@ class Manage extends BaseController
         $this->auth->createGroup('responden','Responden adalah actor yang mengisi survey dan mendapatkan komisi'); */
         //$this->auth->addUserToGroup(1,'creator');
 
-        //$this->auth->createPermission('isi_survey','Memperbolehkan user untuk mengisi survey.');
+
+        /* $this->auth->createPermission('user_free','Permission ini digunakan untuk user free.');
+
+        $this->auth->createPermission('user_berlangganan','Permission ini digunakan untuk user yang sudah berlangganan.');
+
+        $this->auth->createPermission('user_sekali_bayar','Permission ini digunakan untuk user sekali bayar.'); */
 
         //$this->auth->createGroup('fadil','contoh deskripsi');
 
