@@ -1,9 +1,9 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\Session\Session;
-use Myth\Auth\Config\Auth as AuthConfig;
-use Myth\Auth\Entities\User;
-use Myth\Auth\Models\UserModel;
+use Config\Auth as AuthConfig;
+use App\Entities\User;
+use App\Models\UserModel;
 
 /**
  * Auto generate from auth library
@@ -11,6 +11,7 @@ use Myth\Auth\Models\UserModel;
 class Auth extends BaseController
 {
 	protected $auth;
+	protected $authorize;
 
 	/**
 	 * @var AuthConfig
@@ -30,6 +31,7 @@ class Auth extends BaseController
 
 		$this->config = config('Auth');
 		$this->auth = service('authentication');
+		$this->authorize = service('authorization');
 	}
 
 	//--------------------------------------------------------------------

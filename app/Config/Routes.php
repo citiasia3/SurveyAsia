@@ -33,11 +33,33 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index', ['filter' => 'login']); //contoh single route filter
 $routes->get('auth', 'Auth::index');
-$routes->get('auth/login', 'Auth::login');
-$routes->get('auth/logout', 'Auth::logout');
 $routes->add('survey/*', 'Survey::index', ['filter' => 'permission:manage_survey']);
 $routes->get('manage', 'Manage::index', ['filter' => 'permission:manage_survey']);
 $routes->add('group/(:num)/users', 'Manage::usersInGroup/$1');
+
+/*
+ * Myth:Auth routes file.
+ */
+$routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
+    // Login/out
+    $routes->get('login', 'Auth::login', ['as' => 'login']);
+    $routes->post('login', 'Auth::attemptLogin');
+    $routes->get('logout', 'Auth::logout');
+
+    // Registration
+    $routes->get('register', 'Auth::register', ['as' => 'register']);
+    $routes->post('register', 'Auth::attemptRegister');
+
+    // Activation
+    $routes->get('activate-account', 'Auth::activateAccount', ['as' => 'activate-account']);
+    $routes->get('resend-activate-account', 'Auth::resendActivateAccount', ['as' => 'resend-activate-account']);
+
+    // Forgot/Resets
+    $routes->get('forgot', 'Auth::forgotPassword', ['as' => 'forgot']);
+    $routes->post('forgot', 'Auth::attemptForgot');
+    $routes->get('reset-password', 'Auth::resetPassword', ['as' => 'reset-password']);
+    $routes->post('reset-password', 'Auth::attemptReset');
+});
 /* $routes->group('', ['filter' => 'login'], function($routes){
 	$routes->get('dashboard','Home::dashboard');
 }); */

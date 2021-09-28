@@ -33,17 +33,17 @@ class Home extends BaseController
 		echo '<br><br><br><a href="">logout</a>'; */
 
 		/* $auth = service('authorization');
-		$auth->addPermissionToUser('manage_survey', 4); */
+		$auth->addPermissionToUser('manage_survey', 7); */
 
 		$data = [
 			'title' => 'Dashboard'
 		];
 
 		return view('home/index', $data);
-		/* $user = $this->auth->user();
-		$check = $this->auth->check();
+		//$user = $auth->id();
+		//$check = $this->auth->check();
 
-		$this->prettyVarDump($check,'user'); */
+		//$this->prettyVarDump($user,'user');
 
 		/* $this->type_satu(1, true);
 		$this->type_dua(true); */

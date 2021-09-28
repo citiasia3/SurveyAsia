@@ -6,7 +6,7 @@
 
     <h1><?php echo $title ?></h1>
 
-    <a class="btn btn-warning" href="<?php echo base_url('/auth/logout'); ?>">logout</a>
+    <a class="btn btn-warning" href="<?php echo base_url('logout'); ?>">logout</a>
 </div>
 
 <?= $this->endSection(); ?>
