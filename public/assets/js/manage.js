@@ -28,22 +28,23 @@
 //     id_pertanyaan.textContent = id_survey_pertanyaan
 //     //label.text = id_survey_pertanyaan
 // })
-
-var exampleModal = document.getElementById('modalEditPertanyaan')
-exampleModal.addEventListener('show.bs.modal', function (event) {
+var editGroupModal = document.getElementById('editGroup')
+editGroupModal.addEventListener('show.bs.modal', function (event) {
     // get dta pertanyaan
     var button = event.relatedTarget
-    var id_survey_pertanyaan = button.getAttribute('data-bs-whatever')
-    var pertanyaan = button.getAttribute('data-pertanyaan')
-    // isi value
-    var inputId = document.getElementById('idPertanyaan')
-    var inputPertanyaan = document.getElementById('pertanyaan')
+    var id = button.getAttribute('data-bs-whatever')
+    var name = button.getAttribute('data-name')
+    var description = button.getAttribute('data-description')
 
-    inputId.value = id_survey_pertanyaan
-    inputPertanyaan.value = pertanyaan
-    // const idPertanyaan = document.getAttribute('data-id')
-    // console.log(pertanyaan)
-    // console.log(id_survey_pertanyaan)
+    // isi value
+    var inputIdGroup = document.getElementById('idGroupName')
+    var inputName = document.getElementById('name')
+    var inputDescription = document.getElementById('description')
+
+    inputIdGroup.value = id
+    inputName.value = name
+    inputDescription.value = description
+
 })
 
 

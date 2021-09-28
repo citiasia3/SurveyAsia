@@ -21,15 +21,20 @@ class SurveyModel extends Model
     protected $validationRules = [];
     protected $builder;
 
+    private $auth;
+
     public function __construct()
     {
         $this->builder = $this->builder();
+        $this->auth = service('authentication');
     }
-
     public function getAllSurvey()
     {
         # untuk menampilkan semua survey
-        return $this->builder->get();
+        // return $this->builder->get();
+        $userId = $this->auth->id();
+        // dd($userId);
+        return $this->builder->getWhere(['id_creator' => $userId]);
     }
     // menampilkan survey by id cara levi
     // public function getSurveyById(bool $singleResult, $idSurvey)

@@ -8,9 +8,23 @@ use App\Data\User as User;
 class Home extends BaseController
 {
 	protected $userModel;
+	private $auth;
+
+	public function __construct()
+	{
+		$this->auth = service('authorization');
+	}
 
 	public function index()
 	{
+		// $this->auth->createGroup('creator', 'Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank');
+		// $this->auth->createGroup('responden', 'Responden adalah actor yang mengisi survey dan mendapatkan komisi');
+		// $this->auth->addUserToGroup(1, 'creator');
+
+		// $this->auth->createPermission('isi_survey', 'Memperbolehkan user untuk mengisi survey.');
+
+		// $this->auth->addPermissionToGroup('manage_survey', 1);
+
 		/* $this->type_satu(1,false); */
 		//$this->testDeleteUser(20);
 		//$this->testInsertUser();

@@ -67,14 +67,11 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Judul</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="judul">
+                            <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id_creator" value="<?= $id_creator ?>">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Deskripsi</label>
                             <textarea class="form-control" name="deskripsi" id="" cols="30" rows="5"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Jumlah Responden</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="jumlah_responden">
                         </div>
                 </div>
                 <div class="modal-footer">
