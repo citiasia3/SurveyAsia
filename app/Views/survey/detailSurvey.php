@@ -144,23 +144,31 @@
                                     <th scope="row"><?= $i++; ?>.</th>
                                     <td><a href=""><?= $p->pertanyaan ?></a></td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditPertanyaan" data-bs-whatever="<?= $p->id_survey_pertanyaan ?>" data-pertanyaan="<?= $p->pertanyaan ?>">
+                                        <!-- Example single danger button -->
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Option
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditPertanyaan" data-bs-whatever="<?= $p->id_survey_pertanyaan ?>" data-pertanyaan="<?= $p->pertanyaan ?>">Edit</a></li>
+                                                <li><a class="dropdown-item" href="/pertanyaan/deletePertanyaan/<?= $p->id_survey_pertanyaan ?>/<?= $survey->id_survey ?>">Delete</a></li>
+                                            </ul>
+                                        </div>
+                                        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditPertanyaan" data-bs-whatever="<?= $p->id_survey_pertanyaan ?>" data-pertanyaan="<?= $p->pertanyaan ?>">
                                             Edit
                                         </button>
-                                        <a href="/pertanyaan/deletePertanyaan/<?= $p->id_survey_pertanyaan ?>/<?= $survey->id_survey ?>">Delete</a>
+                                        <a href="/pertanyaan/deletePertanyaan/<?= $p->id_survey_pertanyaan ?>/<?= $survey->id_survey ?>">Delete</a> -->
                                     </td>
                                 </tr>
                         </tbody>
                     <?php endforeach; ?>
                     <?php $i; ?>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="/assets/js/detail_survey.js"></script>
 
