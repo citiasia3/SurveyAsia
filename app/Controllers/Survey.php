@@ -10,19 +10,25 @@ class Survey extends BaseController
 {
     protected $survey_model;
     protected $survey_pertanyaan_model;
+    private $auth;
     public function __construct()
     {
         $this->survey_model = new SurveyModel();
         $this->survey_pertanyaan_model = new SurveyPertanyaanModel();
+        $this->auth = service('authentication');
         // $this->galery_model = new Galery_model();
     }
     public function index()
     {
         $survey = $this->survey_model->getAllSurvey()->getResult();
+        $userId = $this->auth->id();
+        // dd($userId);
         $data = [
             'title' => 'Survey',
-            'survey' => $survey
+            'survey' => $survey,
+            'id_creator' => $userId
         ];
+        // dd($data);
         // var_dump($survey);
         return view('survey/index', $data);
     }
@@ -31,7 +37,7 @@ class Survey extends BaseController
     {
         $survey = $this->survey_model->getSurveyById($id)->getRow();
         $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
-        $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
+        // $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
         // foreach ($detailSurveyPertanyaan as $key => $value) {
         // 	# code...
         // 	$array['pertanyaan'] = $value->pertanyaan;
@@ -92,28 +98,16 @@ class Survey extends BaseController
     public function save()
     {
         $request = \Config\Services::request();
-
         //cara fadhil insert db
         $data_survey = [
             // "id" => $random,
             "judul" => $request->getPost('judul'),
             "deskripsi" => $request->getPost('deskripsi'),
-            "jumlah_responden" => $request->getPost('jumlah_responden'),
+            "jumlah_responden" => 0,
+            "id_creator" => $request->getPost('id_creator'),
+            // "id_creator" => $id_creator
         ];
         $this->survey_model->tambah_survey($data_survey);
-
-        //cara levi insert db
-        # code...
-        //hanya untuk test
-        // $survey = new Survey();
-        // $survey->judul = $request->getPost('judul');
-        // $survey->deskripsi = $request->getPost('deskripsi');
-        // $survey->jumlahResponden = $request->getPost('jumlah_responden');
-        // $insert = $this->survey_model->insertSurvey($survey);
-
-        // //output dibawah ini adalah survey ID yang berhasil dimasukkan kedalam database
-        // $this->prettyVarDump($insert, 'Survey Input Test');
-
         return redirect()->to(base_url('survey'));
     }
     // <?= base_url('uploads/survey/' . $p['gambar']); ">

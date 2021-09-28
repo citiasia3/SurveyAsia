@@ -19,7 +19,10 @@
                     <h5> Data Survey</h5>
                 </div>
                 <div class="card-body">
-                    <a class="btn btn-primary mb-2" href="<?= base_url('survey/tambahSurvey') ?>" c>Tambah Survey</a>
+                    <!-- <a class="btn btn-primary mb-2" href="<?= base_url('survey/tambahSurvey') ?>" c>Tambah Survey</a> -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPertanyaan">
+                        Tambah Survey
+                    </button>
                     <table class="table">
                         <thead>
                             <tr>
@@ -51,6 +54,34 @@
             </div>
         </div>
     </div>
+    <!-- Modal tambah survey -->
+    <div class="modal fade" id="modalTambahPertanyaan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Survey</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/survey/save" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Judul</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="judul">
+                            <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id_creator" value="<?= $id_creator ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" name="deskripsi" id="" cols="30" rows="5"></textarea>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <?= $this->endSection(); ?>
