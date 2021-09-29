@@ -38,15 +38,23 @@ $routes->add('group/(:num)/users', 'Manage::usersInGroup/$1');
 
 $routes->group('survey', ['filter' => 'login'], function ($routes) {
     //survey
-    $routes->get('all', 'Survey::index');
-    $routes->get('my', 'Survey::userSurvey', ['filter' => 'login']);
+    $routes->get('', 'Survey::index');
+    $routes->get('all', 'Survey::dashboard');
+    $routes->get('my', 'Survey::userSurvey');
 
     //join as creator
-    $routes->get('join/(:num)', 'Survey::joinCreator/$1');
+    $routes->get('join', 'Survey::joinCreator');
     $routes->post('join', 'Survey::attemptJoinCreator');
 
     //create survey
     $routes->post('create', 'Survey::tambahsurvey', ['filter' => 'permission:manage_survey']);
+
+    //answer survey
+    $routes->get('(:num)/questions', 'Survey::showQuestions/$1');
+    $routes->post('answer', 'Survey::answerQuestions');
+
+    //info survey
+    $routes->get('(:num)/info', 'Survey::infoSurvey/$1');
 });
 
 /*
