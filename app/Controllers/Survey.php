@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 // use App\Models\SurveyModel;
+
+use App\Data\UserProfile;
 use SurveyModel;
 use SurveyPertanyaanModel;
 
@@ -11,26 +13,48 @@ class Survey extends BaseController
     protected $survey_model;
     protected $survey_pertanyaan_model;
     private $auth;
+    private $authorize;
     public function __construct()
     {
         $this->survey_model = new SurveyModel();
         $this->survey_pertanyaan_model = new SurveyPertanyaanModel();
         $this->auth = service('authentication');
+        $this->authorize = service('authorization');
         // $this->galery_model = new Galery_model();
     }
     public function index()
     {
-        $survey = $this->survey_model->getAllSurvey()->getResult();
         $userId = $this->auth->id();
-        // dd($userId);
+        $allSurvey = $this->surveyModel->getAllSurvey()->getResult();
+
+        $data = [
+            'title' => 'Survey List',
+            'surveys' => $allSurvey,
+            'user_id' => $userId
+        ];
+
+        return view('survey/index', $data);
+    }
+
+    public function userSurvey()
+    {
+        # code...
+        $userId = $this->auth->id();
+        $survey = $this->survey_model->getSurveyByCreatorId($userId)->getResult();
+        //$this->authorize->addUserToGroup($userId, 'creator');
+        $userInGroup = $this->authorize->inGroup('creator', $userId);
+
         $data = [
             'title' => 'Survey',
             'survey' => $survey,
+            'ingroup' => $userInGroup,
             'id_creator' => $userId
         ];
-        // dd($data);
-        // var_dump($survey);
-        return view('survey/index', $data);
+
+        $this->prettyVarDump($data, 'tes');
+
+
+        return view('survey/userSurvey', $data);
     }
 
     public function detailSurvey($id)
@@ -128,5 +152,42 @@ class Survey extends BaseController
         ];
         $this->survey_model->updateSurvey($data_survey, $id_survey);
         return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
+    }
+
+    public function joinCreator($userId)
+    {
+        # code...
+
+        if ($this->authorize->inGroup('creator', $userId) == 1) {
+            # code...
+            return redirect()->to(base_url('survey/my'))->with('error', lang('Auth.alreadyCreator'));
+        }
+
+        $data = [
+            'title' => 'Join as Creator'
+        ];
+
+        return view('survey/joinCreator', $data);
+    }
+
+    public function attemptJoinCreator()
+    {
+        # code...
+        $request = \Config\Services::request();
+
+        $userProfile = new UserProfile;
+
+        $userProfile->firstName = $request->getPost('first_name');
+        $userProfile->lastName = $request->getPost('last_name');
+        $userProfile->alamat = $request->getPost('alamat');
+
+        $insert = $this->userProfileModel->insertUser($userProfile);
+
+        if ($insert != null) {
+            # code...
+            $userId = $this->auth->id();
+            $this->authorize->addUserToGroup($userId, 'creator');
+            return redirect()->to('my');
+        }
     }
 }

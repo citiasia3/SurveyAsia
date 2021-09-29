@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use SurveyJawabanModel;
 use SurveyModel;
 use SurveyPertanyaanModel;
-use SurveyUserModel;
+use UserProfileModel;
 
 /**
  * Class BaseController
@@ -42,7 +42,7 @@ class BaseController extends Controller
 	 */
 	protected $surveyModel;
 	protected $surveyJawabanModel;
-	protected $surveyUserModel;
+	protected $userProfileModel;
 	protected $surveyPertanyaanModel;
 
 	protected $user;
@@ -66,7 +66,7 @@ class BaseController extends Controller
 
 		$this->surveyModel = new SurveyModel();
 		$this->surveyJawabanModel = new SurveyJawabanModel();
-		$this->surveyUserModel = new SurveyUserModel();
+		$this->userProfileModel = new UserProfileModel();
 		$this->surveyPertanyaanModel = new SurveyPertanyaanModel();
 
 		$this->user = new UserModel();

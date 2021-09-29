@@ -1,23 +1,23 @@
 <?php
 
-use App\Data\User;
+use App\Data\UserProfile as User;
 use CodeIgniter\Model;
 
-class SurveyUserModel extends Model
+class UserProfileModel extends Model
 {
     //informasi tabel
-    protected $table = 'user';
-    protected $primaryKey = 'id_user';
+    protected $table = 'user_profile';
+    protected $primaryKey = 'id_user_profile';
 
     //pencatatan waktu dan tanggal
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat = 'datetime';
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
     //informasi field
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['id_user', 'username', 'email', 'password', 'first_name', 'last_name', 'role_id', 'is_active'];
+    protected $allowedFields = ['first_name', 'last_name', 'alamat', 'nomor_hp', 'file_ktp', 'nomor_rekening', 'foto_profile'];
     protected $validationRules = [];
 
     protected $builder;
@@ -28,17 +28,10 @@ class SurveyUserModel extends Model
     }
 
 
-    public function getAllUser()
-    {
-        # untuk menampilkan semua user
-        return $this->builder->get();
-    }
-
-
-    public function getUserById(bool $singleResult, $idUser)
+    public function getProfileByUserId($idUser)
     {
         # code...
-        return $this->doFind($singleResult, $idUser);
+        return $this->doFind(true, $idUser);
     }
 
     /**
@@ -68,10 +61,5 @@ class SurveyUserModel extends Model
     {
         # code...
         return $this->delete($id_user);
-    }
-
-    public function getUserRole($id_user)
-    {
-        # code...
     }
 }
