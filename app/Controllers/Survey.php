@@ -31,6 +31,8 @@ class Survey extends BaseController
         // dd($data);
         // var_dump($survey);
         return view('survey/index', $data);
+
+        //fadhil test 
     }
 
     public function detailSurvey($id)
