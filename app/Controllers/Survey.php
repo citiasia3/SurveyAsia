@@ -57,13 +57,6 @@ class Survey extends BaseController
             'ingroup' => $userInGroup,
             'id_creator' => $userId
         ];
-<<<<<<< HEAD
-        // dd($data);
-        // var_dump($survey);
-        return view('survey/index', $data);
-
-        //fadhil test 
-=======
 
         //$this->prettyVarDump($data, 'tes');
 
@@ -137,7 +130,6 @@ class Survey extends BaseController
         //$this->prettyVarDump($mdata, 'tes');
 
         return view('survey/detailSurveyResponden', $mdata);
->>>>>>> origin/main
     }
 
     public function detailSurvey($id)
@@ -243,7 +235,6 @@ class Survey extends BaseController
         return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
     }
 
-<<<<<<< HEAD
     public function preview($id)
     {
         $survey = $this->survey_model->getSurveyById($id)->getRow();
@@ -256,7 +247,7 @@ class Survey extends BaseController
         ];
         // tampilkan form create
         return view('survey/preview', $data);
-=======
+    }
     public function joinCreator()
     {
         # code...
@@ -293,6 +284,5 @@ class Survey extends BaseController
             $this->authorize->addUserToGroup($userId, 'creator');
             return redirect()->to('my');
         }
->>>>>>> origin/main
     }
 }
