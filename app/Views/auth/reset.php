@@ -1,8 +1,8 @@
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
 <link rel="stylesheet" href="<?php echo base_url('assets/css/log.css'); ?>">
-<link rel="shortcut icon" href="<?php echo base_url('assets/image/cia.png'); ?>">
 <img class="wave" src="<?php echo base_url('assets/image/wave.png'); ?>">
+<link rel="shortcut icon" href="<?php echo base_url('assets/image/cia.png'); ?>">
 
 <div class="container">
     <div class="row" style="margin-top:45px">
@@ -66,4 +66,5 @@
     </div>
 </div>
 
+<img class="gambar" src="<?php echo base_url('assets/image/cia.png'); ?>">
 <?= $this->endSection() ?>
