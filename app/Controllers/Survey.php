@@ -28,16 +28,15 @@ class Survey extends BaseController
             'survey' => $survey,
             'id_creator' => $userId
         ];
-        dd($data);
+        // dd($data);
         // var_dump($survey);
         return view('survey/index', $data);
     }
 
     public function detailSurvey($id)
     {
-        $survey = $this->survey_model->getSurveyById($id)->getRow();
-        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
-        // $jawabanbyIdPertanyaan = $this->survey_pertanyaan_model->getJawabanByPertanyaanId($id)->getResult(); 
+        // $jawabanbyIdPertanyaan = $this->survey_pertanyaan_model->getJawabanByPertanyaanId($pertanyaanbyIdSurvey['id_survey_pertanyaan'])->getResult();
+
 
         // $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
         // foreach ($detailSurveyPertanyaan as $key => $value) {
@@ -46,10 +45,13 @@ class Survey extends BaseController
         // 	// $array['survey_desc'] = $value->deskripsi;
         // 	$array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
         // }
+        $survey = $this->survey_model->getSurveyById($id)->getRow();
+        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
         $data = [
             'title' => 'Detail survey',
             'survey' => $survey,
             'pertanyaanbyIdSurvey' => $pertanyaanbyIdSurvey,
+            // 'jawaban' => $jawabanbyIdPertanyaan,
         ];
         // tampilkan form create
         return view('survey/detailSurvey', $data);
@@ -130,5 +132,19 @@ class Survey extends BaseController
         ];
         $this->survey_model->updateSurvey($data_survey, $id_survey);
         return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
+    }
+
+    public function preview($id)
+    {
+        $survey = $this->survey_model->getSurveyById($id)->getRow();
+        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
+        $data = [
+            'title' => 'Preview Survey',
+            'survey' => $survey,
+            'pertanyaanbyIdSurvey' => $pertanyaanbyIdSurvey,
+            // 'jawaban' => $jawabanbyIdPertanyaan,
+        ];
+        // tampilkan form create
+        return view('survey/preview', $data);
     }
 }

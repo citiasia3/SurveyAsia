@@ -51,8 +51,14 @@
                                 <p class="form-control"><?= $survey->jumlah_responden ?></p>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-secondary">Edit Survey</button>
+                        <div class="row mb-3">
+                            <div class="col-sm-2">
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-secondary">Edit Survey</button>
+                                <a href="<?= base_url('survey/preview/') ?>/<?= $survey->id_survey ?>" class="btn btn-light">Preview</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -129,6 +135,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Tabel Pertanyaan -->
                     <table class="table">
                         <thead>
                             <tr>

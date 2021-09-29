@@ -20,7 +20,7 @@ class Home extends BaseController
 
 	public function index()
 	{
-		$this->type_dua(1);
+		// $this->type_dua(1);
 		// $this->auth->createGroup('creator', 'Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank');
 		// $this->auth->createGroup('responden', 'Responden adalah actor yang mengisi survey dan mendapatkan komisi');
 		// $this->auth->addUserToGroup(1, 'creator');
