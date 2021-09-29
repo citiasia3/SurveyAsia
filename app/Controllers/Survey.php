@@ -28,7 +28,7 @@ class Survey extends BaseController
             'survey' => $survey,
             'id_creator' => $userId
         ];
-        // dd($data);
+        dd($data);
         // var_dump($survey);
         return view('survey/index', $data);
     }
@@ -37,6 +37,8 @@ class Survey extends BaseController
     {
         $survey = $this->survey_model->getSurveyById($id)->getRow();
         $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
+        // $jawabanbyIdPertanyaan = $this->survey_pertanyaan_model->getJawabanByPertanyaanId($id)->getResult(); 
+
         // $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
         // foreach ($detailSurveyPertanyaan as $key => $value) {
         // 	# code...
