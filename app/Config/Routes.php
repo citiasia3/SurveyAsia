@@ -35,8 +35,8 @@ $routes->get('/', 'Home::index', ['filter' => 'login']); //contoh single route f
 $routes->get('auth', 'Auth::index');
 $routes->get('auth/login', 'Auth::login');
 $routes->get('auth/logout', 'Auth::logout');
-$routes->add('survey/*', 'Survey::index', ['filter' => 'permission:manage_survey']);
-$routes->get('manage', 'Manage::index', ['filter' => 'permission:manage_survey']);
+$routes->add('survey/*', 'Survey::index');
+$routes->get('manage', 'Manage::index');
 $routes->add('group/(:num)/users', 'Manage::usersInGroup/$1');
 /* $routes->group('', ['filter' => 'login'], function($routes){
 	$routes->get('dashboard','Home::dashboard');
