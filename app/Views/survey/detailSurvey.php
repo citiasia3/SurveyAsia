@@ -11,7 +11,7 @@
                     <a class="nav-link active" aria-current="page" href="#">Pertanyaan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/survey/detailSurveyResponden/<?= $survey->id_survey ?>"" ">Responden</a>
+                    <a class="nav-link" href="/survey/<?= $survey->id_survey ?>/info">Responden</a>
                 </li>
 
             </ul>

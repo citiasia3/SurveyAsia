@@ -8,7 +8,7 @@ $routes = Services::routes();
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.
 if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
-	require SYSTEMPATH . 'Config/Routes.php';
+    require SYSTEMPATH . 'Config/Routes.php';
 }
 
 /**
@@ -33,9 +33,29 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index', ['filter' => 'login']); //contoh single route filter
 $routes->get('auth', 'Auth::index');
-$routes->add('survey/*', 'Survey::index', ['filter' => 'permission:manage_survey']);
 $routes->get('manage', 'Manage::index', ['filter' => 'permission:manage_survey']);
 $routes->add('group/(:num)/users', 'Manage::usersInGroup/$1');
+
+$routes->group('survey', ['filter' => 'login'], function ($routes) {
+    //survey
+    $routes->get('', 'Survey::index');
+    $routes->get('all', 'Survey::dashboard');
+    $routes->get('my', 'Survey::userSurvey');
+
+    //join as creator
+    $routes->get('join', 'Survey::joinCreator');
+    $routes->post('join', 'Survey::attemptJoinCreator');
+
+    //create survey
+    $routes->post('create', 'Survey::tambahsurvey', ['filter' => 'permission:manage_survey']);
+
+    //answer survey
+    $routes->get('(:num)/questions', 'Survey::showQuestions/$1');
+    $routes->post('answer', 'Survey::answerQuestions');
+
+    //info survey
+    $routes->get('(:num)/info', 'Survey::infoSurvey/$1');
+});
 
 /*
  * Myth:Auth routes file.
@@ -80,5 +100,5 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
  * needing to reload it.
  */
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
-	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }

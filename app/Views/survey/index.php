@@ -3,85 +3,35 @@
 <?= $this->section('content'); ?>
 
 <div class="container mt-3">
+    <?php if ($ingroup != null) : ?>
+        <a class="btn btn-sm btn-primary mb-5" href="<?php echo base_url('survey/my') ?>">Your Survey</a>
+    <?php else : ?>
+        <a class="btn btn-sm btn-primary mb-5" href="<?php echo base_url('survey/join') ?>">Create Your Survey</a>
+    <?php endif; ?>
 
-    <div class="row">
-        <div class="col">
-            <div class="card shadow p-3 mb-5 bg-white rounded">
-                <?php if (session()->getFlashData('success')) : ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?= session()->getFlashData('success') ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <h4 class="mb-3">Column with per Dynamic Row</h4>
+    <?php foreach ($surveys as $key => $value) : ?>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img src="https://images.unsplash.com/photo-1593642533144-3d62aa4783ec?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=350&q=80" class="img-fluid rounded-start" alt="tes">
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $value->judul ?></h5>
+                                <p class="card-text"><?php echo $value->deskripsi ?></p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                <a href="<?php echo base_url('survey/' . $value->id_survey . '/questions') ?>" class="btn btn-sm btn-primary text-end">Lihat</a>
+                            </div>
+                        </div>
                     </div>
-                <?php endif; ?>
-                <div class="card-header">
-                    <h5> Data Survey</h5>
-                </div>
-                <div class="card-body">
-                    <!-- <a class="btn btn-primary mb-2" href="<?= base_url('survey/tambahSurvey') ?>" c>Tambah Survey</a> -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPertanyaan">
-                        Tambah Survey
-                    </button>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Judul</th>
-                                <th scope="col">deskripsi</th>
-                                <th scope="col">jumlah responden</th>
-                                <th scope="col">action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <?php $i = 1; ?>
-                                <?php foreach ($survey as $s) : ?>
-                                    <th scope="row"><?= $i++; ?></th>
-                                    <td><?= $s->judul ?></td>
-                                    <td><?= $s->deskripsi ?></td>
-                                    <td><?= $s->jumlah_responden ?></td>
-                                    <td>
-                                        <a href="/survey/detailSurvey/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a>
-                                        <a href="/survey/deleteSurvey/<?= $s->id_survey ?>" class="btn btn-danger">Delete</a>
-                                    </td>
-                            </tr>
-                        <?php endforeach; ?>
-                        <?php $i; ?>
-                        </tbody>
-                    </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Modal tambah survey -->
-    <div class="modal fade" id="modalTambahPertanyaan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Survey</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="/survey/save" method="post" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Judul</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="judul">
-                            <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id_creator" value="<?= $id_creator ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="deskripsi" id="" cols="30" rows="5"></textarea>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
+        </div>
+    <?php endforeach; ?>
 </div>
 
 <?= $this->endSection(); ?>
