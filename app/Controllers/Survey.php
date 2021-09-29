@@ -33,7 +33,9 @@ class Survey extends BaseController
             'user_id' => $userId
         ];
 
-        return view('survey/index', $data);
+        $this->prettyVarDump($data, 'tes');
+
+        //return view('survey/index', $data);
     }
 
     public function userSurvey()

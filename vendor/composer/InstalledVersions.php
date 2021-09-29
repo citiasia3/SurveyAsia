@@ -14,24 +14,31 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => 'v4.0.5',
-    'version' => '4.0.5.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => 'fd6b4bdd834d04c48ffb03dab92ecee49b8a03cb',
     'name' => 'codeigniter4/appstarter',
   ),
   'versions' => 
   array (
     'codeigniter4/appstarter' => 
     array (
-      'pretty_version' => 'v4.0.5',
-      'version' => '4.0.5.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => 'fd6b4bdd834d04c48ffb03dab92ecee49b8a03cb',
+    ),
+    'codeigniter4/authentication-implementation' => 
+    array (
+      'provided' => 
+      array (
+        0 => '1.0',
+      ),
     ),
     'codeigniter4/framework' => 
     array (
@@ -71,21 +78,12 @@ private static $installed = array (
     ),
     'laminas/laminas-escaper' => 
     array (
-      'pretty_version' => '2.6.1',
-      'version' => '2.6.1.0',
+      'pretty_version' => '2.9.0',
+      'version' => '2.9.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '25f2a053eadfa92ddacb609dcbbc39362610da70',
-    ),
-    'laminas/laminas-zendframework-bridge' => 
-    array (
-      'pretty_version' => '1.1.1',
-      'version' => '1.1.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '6ede70583e101030bcace4dcddd648f760ddf642',
+      'reference' => '891ad70986729e20ed2e86355fcf93c9dc238a5f',
     ),
     'mikey179/vfsstream' => 
     array (
@@ -108,6 +106,15 @@ private static $installed = array (
       array (
         0 => '1.10.2',
       ),
+    ),
+    'myth/auth' => 
+    array (
+      'pretty_version' => 'v1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c62802b9e2ce5be931f15270811d831cc2e85457',
     ),
     'phar-io/manifest' => 
     array (
@@ -378,13 +385,6 @@ private static $installed = array (
       array (
       ),
       'reference' => '6964c76c7804814a842473e0c8fd15bab0f18e25',
-    ),
-    'zendframework/zend-escaper' => 
-    array (
-      'replaced' => 
-      array (
-        0 => '2.6.1',
-      ),
     ),
   ),
 );
