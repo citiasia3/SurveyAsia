@@ -17,9 +17,12 @@ class SurveyJawabanModel extends Model
     public function detailJawaban($id_survey_pertanyaan)
     {
         # code...
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->table);
+        return $this->builder()->getWhere(['id_survey_pertanyaan' => $id_survey_pertanyaan]);
+    }
 
-        return $builder->getWhere(['id_survey_pertanyaan' => $id_survey_pertanyaan]);
+    public function isiJawaban($data)
+    {
+        # code...
+        return $this->builder()->insertBatch($data);
     }
 }

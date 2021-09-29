@@ -14,6 +14,7 @@ class Survey extends BaseController
     protected $survey_pertanyaan_model;
     private $auth;
     private $authorize;
+
     public function __construct()
     {
         $this->survey_model = new SurveyModel();
@@ -24,18 +25,21 @@ class Survey extends BaseController
     }
     public function index()
     {
-        $userId = $this->auth->id();
+
+        $ingroup = $this->authorize->inGroup('creator', $this->auth->id());
         $allSurvey = $this->surveyModel->getAllSurvey()->getResult();
+
+        //$this->authorize->createGroup('responden');
 
         $data = [
             'title' => 'Survey List',
             'surveys' => $allSurvey,
-            'user_id' => $userId
+            'ingroup' => $ingroup
         ];
 
-        $this->prettyVarDump($data, 'tes');
+        //$this->prettyVarDump($data, 'tes');
 
-        //return view('survey/index', $data);
+        return view('survey/index', $data);
     }
 
     public function userSurvey()
@@ -46,6 +50,7 @@ class Survey extends BaseController
         //$this->authorize->addUserToGroup($userId, 'creator');
         $userInGroup = $this->authorize->inGroup('creator', $userId);
 
+
         $data = [
             'title' => 'Survey',
             'survey' => $survey,
@@ -53,10 +58,78 @@ class Survey extends BaseController
             'id_creator' => $userId
         ];
 
-        $this->prettyVarDump($data, 'tes');
+        //$this->prettyVarDump($data, 'tes');
 
 
         return view('survey/userSurvey', $data);
+    }
+
+    public function showQuestions($surveyId)
+    {
+        # code...
+        //detail survey
+        $survey = $this->surveyModel->getSurveyById($surveyId)->getRow();
+        //list pertanyaan dari detail survey
+        $pertanyaan = $this->surveyPertanyaanModel->getPertanyaanBySurveyId($survey->id_survey)->getResult();
+
+        $data = [
+            'title' => 'Pertanyaan Survey',
+            'survey' => $survey,
+            'pertanyaan' => $pertanyaan
+        ];
+        return view('survey/surveyPertanyaan', $data);
+    }
+
+    public function answerQuestions()
+    {
+        # code...
+        $answers = $this->request->getPost('answer');
+        $idResponden = $this->auth->id();
+
+        $data = [];
+
+        $num = 0;
+        foreach ($answers as $key => $value) {
+            # code...
+            $data[$num] = [
+                'id_responden' => $idResponden,
+                'id_survey_pertanyaan' => $key,
+                'isi_jawaban' => $value
+            ];
+            $num++;
+        }
+
+        $this->surveyJawabanModel->isiJawaban($data);
+
+        return redirect()->to('survey');
+    }
+
+    public function infoSurvey($surveyId)
+    {
+        # code...
+        //detail survey sebagai object
+        $survey = $this->surveyModel->getSurveyById($surveyId)->getRow();
+
+        //ambil pertanyaan dari id
+        $pertanyaan = $this->surveyPertanyaanModel->getPertanyaanBySurveyId($survey->id_survey)->getResult();
+
+        /* $num = 0;
+        foreach ($pertanyaan as $key => $value) {
+            # code...
+            $data[$num]['pertanyaan'] = $value->pertanyaan;
+            $num++;
+        } */
+
+        $mdata = [
+            'title' => 'Info Survey',
+            'survey' => $survey,
+            'data' => $pertanyaan,
+            'surveyJawabanModel' => $this->surveyJawabanModel
+        ];
+
+        //$this->prettyVarDump($mdata, 'tes');
+
+        return view('survey/detailSurveyResponden', $mdata);
     }
 
     public function detailSurvey($id)
@@ -78,6 +151,8 @@ class Survey extends BaseController
         // tampilkan form create
         return view('survey/detailSurvey', $data);
     }
+
+
     public function detailPertanyaan($id_pertanyaan)
     {
         # code...
@@ -156,9 +231,10 @@ class Survey extends BaseController
         return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
     }
 
-    public function joinCreator($userId)
+    public function joinCreator()
     {
         # code...
+        $userId = $this->auth->id();
 
         if ($this->authorize->inGroup('creator', $userId) == 1) {
             # code...
