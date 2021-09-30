@@ -1,6 +1,26 @@
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
 
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!--Fontawesome CDN-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  
+</head>
+
+<body>
+	
+
 <div class="container">
 	<div class="row">
 		<div class="col-sm-6 offset-sm-3">
@@ -49,10 +69,10 @@
 								<?=lang('Auth.rememberMe')?>
 							</label>
 						</div>
+						
 <?php endif; ?>
 
 						<br>
-
 						<button type="submit" class="btn btn-primary btn-block"><?=lang('Auth.loginAction')?></button>
 					</form>
 
@@ -66,9 +86,14 @@
 <?php endif; ?>
 				</div>
 			</div>
-
+			<div class="card-footer">
+          <div class="d-flex justify-content-center links">
+            <i>Created By Back End Team</i>
+          </div>
 		</div>
 	</div>
 </div>
+
+
 
 <?= $this->endSection() ?>

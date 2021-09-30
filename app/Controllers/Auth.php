@@ -186,7 +186,7 @@ class Auth extends BaseController
 
 		// Ensure default group gets assigned if set
         if (! empty($this->config->defaultUserGroup)) {
-            $users = $users->withGroup($this->config->defaultUserGroup);
+            //$users = $users->withGroup($this->config->defaultUserGroup);
         }
 
 		if (! $users->save($user))
