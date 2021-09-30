@@ -21,20 +21,15 @@ class SurveyModel extends Model
     protected $validationRules = [];
     protected $builder;
 
-    private $auth;
-
     public function __construct()
     {
         $this->builder = $this->builder();
-        $this->auth = service('authentication');
     }
+
     public function getAllSurvey()
     {
         # untuk menampilkan semua survey
-        // return $this->builder->get();
-        $userId = $this->auth->id();
-        // dd($userId);
-        return $this->builder->getWhere(['id_creator' => $userId]);
+        return $this->builder->get();
     }
     // menampilkan survey by id cara levi
     // public function getSurveyById(bool $singleResult, $idSurvey)
@@ -47,6 +42,12 @@ class SurveyModel extends Model
     {
         # code...
         return $this->getWhere(['id_survey' => $idSurvey]);
+    }
+
+    public function getSurveyByCreatorId($idCreator)
+    {
+        # code...
+        return $this->builder->getWhere(['id_creator' => $idCreator]);
     }
 
 

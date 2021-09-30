@@ -6,7 +6,9 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.2 || ^8.0",
-		"codeigniter4/framework": "^4"
+		"codeigniter4/framework": "^4",
+		"laminas/laminas-escaper": "^2.9",
+		"myth/auth": "^1.0"
 	},
 	"require-dev": {
 		"fakerphp/faker": "^1.9",
