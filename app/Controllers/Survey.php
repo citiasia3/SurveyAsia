@@ -5,6 +5,7 @@ namespace App\Controllers;
 // use App\Models\SurveyModel;
 
 use App\Data\UserProfile;
+use App\Models\UserModel;
 use SurveyModel;
 use SurveyPertanyaanModel;
 
@@ -124,7 +125,8 @@ class Survey extends BaseController
             'title' => 'Info Survey',
             'survey' => $survey,
             'data' => $pertanyaan,
-            'surveyJawabanModel' => $this->surveyJawabanModel
+            'surveyJawabanModel' => $this->surveyJawabanModel,
+            'userModel' => model(UserModel::class)
         ];
 
         //$this->prettyVarDump($mdata, 'tes');
@@ -193,6 +195,13 @@ class Survey extends BaseController
         ];
         // tampilkan form create
         return view('pages/edit_survey', $data);
+    }
+
+    public function test()
+    {
+        # code...
+        $input = $this->request->getPost('tes');
+        $this->prettyVarDump($input, 'tes');
     }
 
 

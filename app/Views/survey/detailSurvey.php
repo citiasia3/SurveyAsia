@@ -168,8 +168,44 @@
             </div>
         </div>
     </div>
-</div>
 
-<script src="/assets/js/detail_survey.js"></script>
+    <div class="row mt-5 mb-3">
+        <!-- Modal Tambah Pertanyaan -->
+        <button type="button" id="btnShowModal" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalFormBuilder">
+            Tambah Pertanyaan Custom
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="modalFormBuilder" tabindex="-1" aria-labelledby="modalFormBuilderLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormBuilderLabel">Tambah Pertanyaan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body container">
+                        <form action="" method="post">
+                            <div id="formContainer">
 
-<?= $this->endSection(); ?>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p id="btnAddQuestion" onclick="initialForms()" class="btn btn-sm btn-secondary">Tambah Pertanyaan</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary">SELESAI</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/detail_survey.js"></script>
+
+    <?= $this->endSection(); ?>
