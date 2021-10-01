@@ -17,17 +17,25 @@
 
     <div class="container">
         <?php foreach ($data as $key => $value) : ?>
-            <div class="row mb-3">
-                <div class="col">
-                    <p><?php echo $value->pertanyaan ?></p>
-
-                    <?php $jawaban = $surveyJawabanModel->detailJawaban($value->id_survey_pertanyaan)->getResult(); ?>
-
-                    <ul class="list-group">
-                        <?php foreach ($jawaban as $mkey => $mvalue) : ?>
-                            <li class="list-group-item"><p><?php echo $mvalue->isi_jawaban; ?></p></li>
-                        <?php endforeach; ?>
-                    </ul>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <p class="mb-4"><?php echo $value->pertanyaan ?></p>
+                            <?php $jawaban = $surveyJawabanModel->detailJawaban($value->id_survey_pertanyaan)->getResult(); ?>
+                            <ul class="list-group">
+                                <?php foreach ($jawaban as $mkey => $mvalue) : ?>
+                                    <li class="list-group-item list-group-item-secondary mb-1">
+                                        <!-- <div class="card mb-1 bg-light"> -->
+                                        <!-- <div class="card-body"> -->
+                                        <p><?php echo $mvalue->isi_jawaban; ?></p>
+                                        <!-- </div> -->
+                                        <!-- </div> -->
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>

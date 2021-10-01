@@ -20,7 +20,8 @@
                 </div>
                 <div class="card-body">
                     <!-- <a class="btn btn-primary mb-2" href="<?= base_url('survey/tambahSurvey') ?>" c>Tambah Survey</a> -->
-                    <button type="button" class="btn btn-primary <?php if ($ingroup == null) : echo 'disabled'; endif; ?>" data-bs-toggle="modal" data-bs-target="#modalTambahPertanyaan">
+                    <button type="button" class="btn btn-primary <?php if ($ingroup == null) : echo 'disabled';
+                                                                    endif; ?>" data-bs-toggle="modal" data-bs-target="#modalTambahPertanyaan">
                         Tambah Survey
                     </button>
 
@@ -33,6 +34,7 @@
                                 <th scope="col">Judul</th>
                                 <th scope="col">deskripsi</th>
                                 <th scope="col">jumlah responden</th>
+                                <th scope="col">status</th>
                                 <th scope="col">action</th>
                             </tr>
                         </thead>
@@ -44,6 +46,13 @@
                                     <td><?= $s->judul ?></td>
                                     <td><?= $s->deskripsi ?></td>
                                     <td><?= $s->jumlah_responden ?></td>
+                                    <td>
+                                        <?php if ($s->is_active == 0) : ?>
+                                            <p class="badge rounded-pill text-dark bg-light">Tidak Aktif</p>
+                                        <?php else : ?>
+                                            <p class="badge rounded-pill bg-secondary">Aktif</p>
+                                        <?php endif; ?>
+                                    </td>
                                     <td>
                                         <a href="/survey/detailSurvey/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a>
                                         <a href="/survey/deleteSurvey/<?= $s->id_survey ?>" class="btn btn-danger">Delete</a>

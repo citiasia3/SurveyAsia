@@ -55,6 +55,9 @@ $routes->group('survey', ['filter' => 'login'], function ($routes) {
 
     //info survey
     $routes->get('(:num)/info', 'Survey::infoSurvey/$1');
+
+    // success survey
+    $routes->get('success', 'Survey::successSurvey');
 });
 
 /*

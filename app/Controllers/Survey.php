@@ -101,7 +101,15 @@ class Survey extends BaseController
 
         $this->surveyJawabanModel->isiJawaban($data);
 
-        return redirect()->to('survey');
+        return redirect()->to(base_url('survey/success'));
+    }
+
+    public function successSurvey()
+    {
+        $data = [
+            'title' => 'success survey'
+        ];
+        return view('survey/success', $data);
     }
 
     public function infoSurvey($surveyId)
@@ -210,17 +218,17 @@ class Survey extends BaseController
             "deskripsi" => $request->getPost('deskripsi'),
             "jumlah_responden" => 0,
             "id_creator" => $request->getPost('id_creator'),
-            // "id_creator" => $id_creator
+            "is_active" => 0,
         ];
         $this->survey_model->tambah_survey($data_survey);
-        return redirect()->to(base_url('survey'));
+        return redirect()->to(base_url('survey/my'));
     }
     // <?= base_url('uploads/survey/' . $p['gambar']); ">
 
     public function deleteSurvey($id)
     {
         $this->survey_model->deleteSurvey($id);
-        return redirect()->to(base_url('survey'))->with('success', 'Delete survey ' . 'success');
+        return redirect()->to(base_url('survey/my'))->with('success', 'Delete survey ' . 'success');
     }
     public function edit()
     {
@@ -230,6 +238,7 @@ class Survey extends BaseController
             "judul" => $request->getPost('judul'),
             "deskripsi" => $request->getPost('deskripsi'),
             "jumlah_responden" => $request->getPost('jumlah_responden'),
+            "is_active" => $request->getPost('is_active'),
         ];
         $this->survey_model->updateSurvey($data_survey, $id_survey);
         return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
