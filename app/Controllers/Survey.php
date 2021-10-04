@@ -10,6 +10,8 @@ use SurveyModel;
 use SurveyPertanyaanModel;
 use SurveyTypePertanyaanModel;
 
+use function PHPSTORM_META\type;
+
 class Survey extends BaseController
 {
     protected $survey_model;
@@ -79,7 +81,8 @@ class Survey extends BaseController
         $data = [
             'title' => 'Pertanyaan Survey',
             'survey' => $survey,
-            'pertanyaan' => $pertanyaan
+            'pertanyaan' => $pertanyaan,
+            'pilihanJawabanModel' => $this->pilihanJawabanModel,
         ];
         return view('survey/surveyPertanyaan', $data);
     }
@@ -88,12 +91,29 @@ class Survey extends BaseController
     {
         # code...
         $answers = $this->request->getPost('answer');
+        $multi = $this->request->getPost('multi');
+        $jmlPertanyaan = $this->request->getPost('jml');
+        $idSurveys = $this->request->getPost('ids');
+        $type = $this->request->getPost('type');
         $idResponden = $this->auth->id();
 
         $data = [];
 
         $num = 0;
-        foreach ($answers as $key => $value) {
+
+        for ($i = 0; $i < $jmlPertanyaan; $i++) {
+            # code...
+            $data[$i]['id_responden'] = $idResponden;
+            $data[$i]['id_survey_pertanyaan'] = $idSurveys[$i];
+            if ($type[$i] == 0 || $type[$i] == 1) {
+                # code...
+                $data[$i]['isi_jawaban'] = $answers[$i];
+            } else {
+                $data[$i]['isi_jawaban'] = implode(',', $multi);
+            }
+        }
+
+        /*  foreach ($answers as $key => $value) {
             # code...
             $data[$num] = [
                 'id_responden' => $idResponden,
@@ -101,7 +121,7 @@ class Survey extends BaseController
                 'isi_jawaban' => $value
             ];
             $num++;
-        }
+        } */
 
         $this->surveyJawabanModel->isiJawaban($data);
 
