@@ -41,6 +41,7 @@ $routes->group('survey', ['filter' => 'login'], function ($routes) {
     $routes->get('', 'Survey::index');
     $routes->get('all', 'Survey::dashboard');
     $routes->get('my', 'Survey::userSurvey');
+    $routes->get('my/(:num)', 'Survey::detailSurvey/$1');
 
     //join as creator
     $routes->get('join', 'Survey::joinCreator');
@@ -55,6 +56,9 @@ $routes->group('survey', ['filter' => 'login'], function ($routes) {
 
     //info survey
     $routes->get('(:num)/info', 'Survey::infoSurvey/$1');
+
+    //create question
+    $routes->post('(:num)/questions/add', 'Survey::simpanPertanyaan/$1');
 });
 
 /*

@@ -36,7 +36,6 @@
 
 
     <script src="/assets/js/chart/chart_data.js"></script>
-    <script src="/assets/js/form/dynamic_form.js"></script>
 
 </body>
 

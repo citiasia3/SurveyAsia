@@ -25,6 +25,7 @@ function createForm() {
   //create question type <select>
   var questionType = document.createElement("select");
   questionType.id = "question" + questionNo;
+  questionType.name = "question[]";
   questionType.className += "form-select";
 
   //create list of options for question type
@@ -65,7 +66,8 @@ function createForm() {
 
   //create input of type text
   var inputQuestion = document.createElement("input");
-  inputQuestion.id = "inputQuestion" + questionNo;
+  inputQuestion.id = "question" + questionNo + "inputQuestion";
+  inputQuestion.name = "inputQuestion[]";
   inputQuestion.className += "form-control";
 
   //label
@@ -95,12 +97,13 @@ function createForm() {
 
   //multi option text
   var multiOptionText = document.createElement("input");
-  multiOptionText.id = "multiOptText" + questionNo;
+  multiOptionText.id = "question" + questionNo + "multiOptText";
+  multiOptionText.name = "multiOptText[]";
   multiOptionText.className += "form-control";
-  multiOptionText.value = "op1,op2,op3";
+  multiOptionText.value = "0";
 
   var labelMultiOptionText = document.createElement("label");
-  labelMultiOptionText.htmlFor = "multiOptText" + questionNo;
+  labelMultiOptionText.htmlFor = "question" + questionNo + "multiOptText";
   labelMultiOptionText.innerHTML = "Multi options (dipisah dengan koma)";
 
   multiOptionContainer.append(multiOptionText);
@@ -111,24 +114,37 @@ function createForm() {
   //hide
   rowOption.style.display = "none";
 
-  questionNo += 1;
-
   //form container
-  document.getElementById("formContainer").append(row);
-  document.getElementById("formContainer").append(rowOption);
+  var form = document.getElementById("formContainer");
+  form.append(row);
+  form.append(rowOption);
 
-  questionType.onchange = setOnChange(questionType.id);
-}
+  //check if question less than
+  /* var submitBtn = document.getElementById("btnSubmit");
+  submitBtn.className = "";
+  if (questionNo <= 3) {
+    submitBtn.className += "btn btn-primary disabled";
+  } else {
+    submitBtn.className += "btn btn-primary";
+  } */
 
-function setOnChange(id) {
-  var select = document.getElementById(id);
-  select.onchange = multiValueChange();
+  questionType.onchange = multiValueChange;
+
+  questionNo++;
 }
 
 function multiValueChange() {
+  console.log(this.value);
+  var row = document.getElementById(this.id + "multiContainer");
+  var multiOpt = document.getElementById(this.id + "multiOptText");
   if (this.value == "Checkbox") {
-    console.log(select.value);
-    var row = document.getElementById(id + "multiContainer");
+    multiOpt.value = "pilihan 1, pilihan 2, pilihan 3";
     row.style.display = "block";
+  } else if (this.value == "Radio") {
+    multiOpt.value = "pilihan 1, pilihan 2, pilihan 3";
+    row.style.display = "block";
+  } else {
+    multiOpt.value = "type text";
+    row.style.display = "none";
   }
 }

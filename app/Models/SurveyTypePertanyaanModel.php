@@ -3,7 +3,7 @@
 use App\Data\Survey;
 use CodeIgniter\Model;
 
-class SurveyModel extends Model
+class SurveyTypePertanyaanModel extends Model
 {
     //informasi tabel
     protected $table = 'survey_tipe_pertanyaan';

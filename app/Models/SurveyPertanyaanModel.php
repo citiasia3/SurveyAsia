@@ -9,7 +9,7 @@ class SurveyPertanyaanModel extends Model
     protected $primaryKey = 'id_survey_pertanyaan';
 
     //pencatatan waktu dan tanggal
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat = 'datetime';
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
