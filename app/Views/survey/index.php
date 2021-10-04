@@ -9,7 +9,7 @@
         <a class="btn btn-sm btn-primary mb-5" href="<?php echo base_url('survey/join') ?>">Create Your Survey</a>
     <?php endif; ?>
 
-    <h4 class="mb-3">Column with per Dynamic Row</h4>
+    <h4 class="mb-3">All Survey</h4>
     <?php foreach ($surveys as $key => $value) : ?>
         <div class="row mb-3">
             <div class="col">

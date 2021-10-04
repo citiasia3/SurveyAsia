@@ -105,7 +105,15 @@ class Survey extends BaseController
 
         $this->surveyJawabanModel->isiJawaban($data);
 
-        return redirect()->to('survey');
+        return redirect()->to(base_url('survey/success'));
+    }
+
+    public function successSurvey()
+    {
+        $data = [
+            'title' => 'success survey'
+        ];
+        return view('survey/success', $data);
     }
 
     public function simpanPertanyaan($id_survey)
@@ -190,8 +198,9 @@ class Survey extends BaseController
 
     public function detailSurvey($id)
     {
-        $survey = $this->survey_model->getSurveyById($id)->getRow();
-        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
+        // $jawabanbyIdPertanyaan = $this->survey_pertanyaan_model->getJawabanByPertanyaanId($pertanyaanbyIdSurvey['id_survey_pertanyaan'])->getResult();
+
+
         // $detailSurveyPertanyaan = $this->surveyPertanyaanModel->detailPertanyaanJawaban($id)->getResult();
         // foreach ($detailSurveyPertanyaan as $key => $value) {
         // 	# code...
@@ -199,11 +208,15 @@ class Survey extends BaseController
         // 	// $array['survey_desc'] = $value->deskripsi;
         // 	$array['jawaban'][$value->id_survey_jawaban] = $value->isi_jawaban;
         // }
+        $survey = $this->survey_model->getSurveyById($id)->getRow();
+        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
         $data = [
             'title' => 'Detail survey',
             'survey' => $survey,
             'pertanyaan' => $pertanyaanbyIdSurvey,
-            'pilihanJawabanModel' => $this->pilihanJawabanModel
+            'pilihanJawabanModel' => $this->pilihanJawabanModel,
+            'pertanyaanbyIdSurvey' => $pertanyaanbyIdSurvey,
+            // 'jawaban' => $jawabanbyIdPertanyaan,
         ];
         // tampilkan form create
         return view('survey/detailSurvey', $data);
@@ -270,17 +283,17 @@ class Survey extends BaseController
             "deskripsi" => $request->getPost('deskripsi'),
             "jumlah_responden" => 0,
             "id_creator" => $request->getPost('id_creator'),
-            // "id_creator" => $id_creator
+            "is_active" => 0,
         ];
         $this->survey_model->tambah_survey($data_survey);
-        return redirect()->to(base_url('survey'));
+        return redirect()->to(base_url('survey/my'));
     }
     // <?= base_url('uploads/survey/' . $p['gambar']); ">
 
     public function deleteSurvey($id)
     {
         $this->survey_model->deleteSurvey($id);
-        return redirect()->to(base_url('survey'))->with('success', 'Delete survey ' . 'success');
+        return redirect()->to(base_url('survey/my'))->with('success', 'Delete survey ' . 'success');
     }
     public function edit()
     {
@@ -290,11 +303,25 @@ class Survey extends BaseController
             "judul" => $request->getPost('judul'),
             "deskripsi" => $request->getPost('deskripsi'),
             "jumlah_responden" => $request->getPost('jumlah_responden'),
+            "is_active" => $request->getPost('is_active'),
         ];
         $this->survey_model->updateSurvey($data_survey, $id_survey);
         return redirect()->to(base_url('/survey/detailSurvey/' . $id_survey))->with('success', 'Ubah survey ' . 'success');
     }
 
+    public function preview($id)
+    {
+        $survey = $this->survey_model->getSurveyById($id)->getRow();
+        $pertanyaanbyIdSurvey = $this->survey_pertanyaan_model->getPertanyaanBySurveyId($id)->getResult();
+        $data = [
+            'title' => 'Preview Survey',
+            'survey' => $survey,
+            'pertanyaanbyIdSurvey' => $pertanyaanbyIdSurvey,
+            // 'jawaban' => $jawabanbyIdPertanyaan,
+        ];
+        // tampilkan form create
+        return view('survey/preview', $data);
+    }
     public function joinCreator()
     {
         # code...

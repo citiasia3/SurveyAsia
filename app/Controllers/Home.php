@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Data\Survey;
+use App\Data\Models\SurveyJawabanModel;
 use App\Data\User as User;
+use SurveyJawabanModel as GlobalSurveyJawabanModel;
 
 class Home extends BaseController
 {
@@ -13,10 +15,12 @@ class Home extends BaseController
 	public function __construct()
 	{
 		$this->auth = service('authorization');
+		$this->surveyJawabanModel = new GlobalSurveyJawabanModel();
 	}
 
 	public function index()
 	{
+		// $this->type_dua(1);
 		// $this->auth->createGroup('creator', 'Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank');
 		// $this->auth->createGroup('responden', 'Responden adalah actor yang mengisi survey dan mendapatkan komisi');
 		// $this->auth->addUserToGroup(1, 'creator');
@@ -142,7 +146,10 @@ class Home extends BaseController
 					# code...
 					$pertanyaan[$mkey] = $mvalue;
 					$data[$num]['pertanyaan'] = $pertanyaan;
-					//$listJawaban = $this->;
+					$listJawaban = $this->surveyJawabanModel->detailJawaban($mvalue['id_survey_pertanyaan'])->getResultArray();
+					foreach ($listJawaban as $key => $jvalue) {
+						$data[$num]['jawaban'][$jvalue['id_responden']] = $jvalue['isi_jawaban'];
+					}
 
 					$num2++;
 				}

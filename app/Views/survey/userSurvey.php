@@ -34,6 +34,7 @@
                                 <th scope="col">Judul</th>
                                 <th scope="col">deskripsi</th>
                                 <th scope="col">jumlah responden</th>
+                                <th scope="col">status</th>
                                 <th scope="col">action</th>
                             </tr>
                         </thead>
@@ -46,7 +47,14 @@
                                     <td><?= $s->deskripsi ?></td>
                                     <td><?= $s->jumlah_responden ?></td>
                                     <td>
-                                        <a href="/survey/my/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a>
+                                        <?php if ($s->is_active == 0) : ?>
+                                            <p class="badge rounded-pill text-dark bg-light">Tidak Aktif</p>
+                                        <?php else : ?>
+                                            <p class="badge rounded-pill bg-secondary">Aktif</p>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <a href="/survey/detailSurvey/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a>
                                         <a href="/survey/deleteSurvey/<?= $s->id_survey ?>" class="btn btn-danger">Delete</a>
                                     </td>
                             </tr>

@@ -28,8 +28,9 @@ class SurveyModel extends Model
 
     public function getAllSurvey()
     {
-        # untuk menampilkan semua survey
-        return $this->builder->get();
+        # untuk menampilkan semua survey yg active
+        // return $this->builder->get();
+        return $this->builder->getWhere(['is_active' => 1]);
     }
     // menampilkan survey by id cara levi
     // public function getSurveyById(bool $singleResult, $idSurvey)

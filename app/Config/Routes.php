@@ -59,6 +59,8 @@ $routes->group('survey', ['filter' => 'login'], function ($routes) {
 
     //create question
     $routes->post('(:num)/questions/add', 'Survey::simpanPertanyaan/$1');
+    // success survey
+    $routes->get('success', 'Survey::successSurvey');
 });
 
 /*

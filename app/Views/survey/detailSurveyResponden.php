@@ -24,10 +24,11 @@
     </div>
 
     <div class="container">
-        <?php $num = 1; foreach ($data as $key => $value) : ?>
+        <?php $num = 1;
+        foreach ($data as $key => $value) : ?>
             <div class="row mb-3">
                 <div class="col">
-                    <h5 class="fw-bold"><?php echo $num.'. '.$value->pertanyaan ?></h5>
+                    <h5 class="fw-bold"><?php echo $num . '. ' . $value->pertanyaan ?></h5>
                     <?php $jawaban = $surveyJawabanModel->detailJawaban($value->id_survey_pertanyaan)->getResult(); ?>
 
                     <ul class="list-group list-group-flush m-3">
@@ -41,6 +42,7 @@
                     </ul>
                 </div>
             </div>
-        <?php $num++; endforeach; ?>
+        <?php $num++;
+        endforeach; ?>
     </div>
     <?= $this->endSection(); ?>

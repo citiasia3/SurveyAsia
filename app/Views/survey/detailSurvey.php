@@ -50,13 +50,33 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah Responden</label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
                             <div class="col-sm-10">
-                                <p class="form-control"><?= $survey->jumlah_responden ?></p>
+                                <select class="form-select" aria-label="Default select example" name="is_active">
+                                    <?php if ($survey->is_active == 0) : ?>
+                                        <option selected value="0">Tidak Aktif</option>
+                                        <option value="1">Aktif</option>
+                                    <?php else : ?>
+                                        <option value="0">Tidak Aktif</option>
+                                        <option value="1" selected>Aktif</option>
+                                    <?php endif; ?>
+                                </select>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-secondary">Edit Survey</button>
+                        <div class="row mb-3">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah Responden</label>
+                            <div class="col-sm-10">
+                                <p class="mt-2"><?= $survey->jumlah_responden ?></p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-2">
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-secondary">Edit Survey</button>
+                                <a href="<?= base_url('survey/preview/') ?>/<?= $survey->id_survey ?>" class="btn btn-light">Preview</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
