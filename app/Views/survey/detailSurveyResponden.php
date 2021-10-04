@@ -15,13 +15,13 @@
         </div>
     </div>
 
-    <div class="container mb-3">
+    <!-- <div class="container mb-3">
         <div class="row">
             <div class="col-4">
                 <canvas id="myChart"></canvas>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="container">
         <?php $num = 1;
