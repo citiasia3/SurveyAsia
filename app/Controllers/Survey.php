@@ -5,13 +5,16 @@ namespace App\Controllers;
 // use App\Models\SurveyModel;
 
 use App\Data\UserProfile;
+use App\Models\UserModel;
 use SurveyModel;
 use SurveyPertanyaanModel;
+use SurveyTypePertanyaanModel;
 
 class Survey extends BaseController
 {
     protected $survey_model;
     protected $survey_pertanyaan_model;
+    private $pilihanJawabanModel;
     private $auth;
     private $authorize;
 
@@ -19,6 +22,7 @@ class Survey extends BaseController
     {
         $this->survey_model = new SurveyModel();
         $this->survey_pertanyaan_model = new SurveyPertanyaanModel();
+        $this->pilihanJawabanModel = new SurveyTypePertanyaanModel();
         $this->auth = service('authentication');
         $this->authorize = service('authorization');
         // $this->galery_model = new Galery_model();
@@ -104,6 +108,57 @@ class Survey extends BaseController
         return redirect()->to('survey');
     }
 
+    public function simpanPertanyaan($id_survey)
+    {
+        # code...
+        $typePertanyaan = $this->request->getPost('question');
+        $pertanyaan = $this->request->getPost('inputQuestion');
+        $pilihanJawaban = $this->request->getPost('multiOptText');
+
+        for ($i = 0; $i < count($pertanyaan); $i++) {
+            # code...
+            /*  $data[$i]['id_survey'] = $id_survey;
+            $data[$i]['pertanyaan'] = $pertanyaan[$i];
+            if ($typePertanyaan[$i] == 'Radio') {
+                $data[$i]['tipe'] = 1;
+            } elseif ($typePertanyaan[$i] == 'Checkbox') {
+                $data[$i]['tipe'] = 2;
+            } else {
+                $data[$i]['tipe'] = 0;
+            } */
+
+            $tipe = 0;
+
+            if ($typePertanyaan[$i] == 'Radio') {
+                $tipe = 1;
+            } elseif ($typePertanyaan[$i] == 'Checkbox') {
+                $tipe = 2;
+            } else {
+                $tipe = 0;
+            }
+
+            $data = [
+                'id_survey' => $id_survey,
+                'pertanyaan' => $pertanyaan[$i],
+                'tipe' => $tipe
+            ];
+
+            $id_pertanyaan = $this->survey_pertanyaan_model->insert($data);
+
+            $pilihanJawabanData = [
+                'id_survey_pertanyaan' => $id_pertanyaan,
+                'deskripsi' => $pilihanJawaban[$i]
+            ];
+
+            if ($tipe != 0) {
+                # code...
+                $this->pilihanJawabanModel->insert($pilihanJawabanData);
+            }
+        }
+
+        return redirect()->to(base_url('survey/my/' . $id_survey));
+    }
+
     public function infoSurvey($surveyId)
     {
         # code...
@@ -124,7 +179,8 @@ class Survey extends BaseController
             'title' => 'Info Survey',
             'survey' => $survey,
             'data' => $pertanyaan,
-            'surveyJawabanModel' => $this->surveyJawabanModel
+            'surveyJawabanModel' => $this->surveyJawabanModel,
+            'userModel' => model(UserModel::class)
         ];
 
         //$this->prettyVarDump($mdata, 'tes');
@@ -146,7 +202,8 @@ class Survey extends BaseController
         $data = [
             'title' => 'Detail survey',
             'survey' => $survey,
-            'pertanyaanbyIdSurvey' => $pertanyaanbyIdSurvey,
+            'pertanyaan' => $pertanyaanbyIdSurvey,
+            'pilihanJawabanModel' => $this->pilihanJawabanModel
         ];
         // tampilkan form create
         return view('survey/detailSurvey', $data);
@@ -193,6 +250,13 @@ class Survey extends BaseController
         ];
         // tampilkan form create
         return view('pages/edit_survey', $data);
+    }
+
+    public function test()
+    {
+        # code...
+        $input = $this->request->getPost('tes');
+        $this->prettyVarDump($input, 'tes');
     }
 
 

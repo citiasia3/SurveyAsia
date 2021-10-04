@@ -35,6 +35,8 @@ class Home extends BaseController
 		/* $auth = service('authorization');
 		$auth->addPermissionToUser('manage_survey', 7); */
 
+		//$this->auth->deleteGroup(3);
+
 		$data = [
 			'title' => 'Dashboard'
 		];

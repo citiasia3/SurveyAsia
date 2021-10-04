@@ -20,7 +20,8 @@
                 </div>
                 <div class="card-body">
                     <!-- <a class="btn btn-primary mb-2" href="<?= base_url('survey/tambahSurvey') ?>" c>Tambah Survey</a> -->
-                    <button type="button" class="btn btn-primary <?php if ($ingroup == null) : echo 'disabled'; endif; ?>" data-bs-toggle="modal" data-bs-target="#modalTambahPertanyaan">
+                    <button type="button" class="btn btn-primary <?php if ($ingroup == null) : echo 'disabled';
+                                                                    endif; ?>" data-bs-toggle="modal" data-bs-target="#modalTambahPertanyaan">
                         Tambah Survey
                     </button>
 
@@ -45,7 +46,7 @@
                                     <td><?= $s->deskripsi ?></td>
                                     <td><?= $s->jumlah_responden ?></td>
                                     <td>
-                                        <a href="/survey/detailSurvey/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a>
+                                        <a href="/survey/my/<?= $s->id_survey ?>" class="btn btn-primary">Detail</a>
                                         <a href="/survey/deleteSurvey/<?= $s->id_survey ?>" class="btn btn-danger">Delete</a>
                                     </td>
                             </tr>
