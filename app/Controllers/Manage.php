@@ -7,18 +7,26 @@ class Manage extends BaseController
 
     private $auth;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->auth = service('authorization');
     }
 
     public function index()
     {
         # code...
-        /* $this->auth->createGroup('creator','Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank');
-        $this->auth->createGroup('responden','Responden adalah actor yang mengisi survey dan mendapatkan komisi'); */
-        //$this->auth->addUserToGroup(1,'creator');
+        // $this->auth->createGroup('creator', 'Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank');
+        // $this->auth->createGroup('responden', 'Responden adalah actor yang mengisi survey dan mendapatkan komisi');
+        // $this->auth->addUserToGroup(1, 'responden');
 
-        //$this->auth->createPermission('isi_survey','Memperbolehkan user untuk mengisi survey.');
+      
+
+        /* $this->auth->createPermission('user_free','Permission ini digunakan untuk user free.');
+
+        $thdsadsais->auth->createPermission('user_berlangganan','Permission ini digunakan untuk user yang sudah berlangganan.');
+
+        $this->auth->createPermission('user_sekali_bayar','Permission ini digunakan untuk user sekali bayar.'); */
+
 
         //$this->auth->createGroup('fadil','contoh deskripsi');
 
@@ -36,6 +44,31 @@ class Manage extends BaseController
 
         return view('manage/index', $data);
     }
+    public function save()
+    {
+        $request = \Config\Services::request();
+        $group_name = $request->getPost('group_name');
+        $description = $request->getPost('description');
+        $this->auth->createGroup($group_name, $description);
+        return redirect()->to(base_url('manage'));
+    }
+
+    public function delete($id)
+    {
+        $this->auth->deleteGroup($id);
+        return redirect()->to(base_url('manage'));
+    }
+    public function update()
+    {
+        $request = \Config\Services::request();
+        $id = $request->getPost('id');
+        $group_name = $request->getPost('group_name');
+        $description = $request->getPost('description');
+        $this->auth->updateGroup($id, $group_name, $description);
+        return redirect()->to(base_url('manage'));
+    }
+
+
 
     public function usersInGroup($groupId)
     {
@@ -51,5 +84,4 @@ class Manage extends BaseController
 
         return view('manage/users', $data);
     }
-    
 }

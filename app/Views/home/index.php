@@ -6,7 +6,25 @@
 
     <h1><?php echo $title ?></h1>
 
-    <a class="btn btn-warning" href="<?php echo base_url('/auth/logout'); ?>">logout</a>
+   
+
 </div>
 
+<!--footer start-->
+<footer class="site-footer">
+            <div class="text-center">
+                <p>
+                    &copy; Copyrights <strong>Survey Asia</strong>. 
+                </p>
+                <div class="credits">
+                   
+                    Created with Back End Team
+                </div>
+                <a href="blank.html#" class="go-top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+            </div>
+        </footer>
+        <!--footer end-->
+    </section>
 <?= $this->endSection(); ?>

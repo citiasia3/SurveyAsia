@@ -3,14 +3,32 @@
 namespace App\Controllers;
 
 use App\Data\Survey;
+use App\Data\Models\SurveyJawabanModel;
 use App\Data\User as User;
+use SurveyJawabanModel as GlobalSurveyJawabanModel;
 
 class Home extends BaseController
 {
 	protected $userModel;
+	private $auth;
+
+	public function __construct()
+	{
+		$this->auth = service('authorization');
+		$this->surveyJawabanModel = new GlobalSurveyJawabanModel();
+	}
 
 	public function index()
 	{
+		// $this->type_dua(1);
+		// $this->auth->createGroup('creator', 'Creator adalah actor yang bisa membuat survey dan template yang disimpan di question bank');
+		// $this->auth->createGroup('responden', 'Responden adalah actor yang mengisi survey dan mendapatkan komisi');
+		// $this->auth->addUserToGroup(1, 'creator');
+
+		// $this->auth->createPermission('isi_survey', 'Memperbolehkan user untuk mengisi survey.');
+
+		// $this->auth->addPermissionToGroup('manage_survey', 1);
+
 		/* $this->type_satu(1,false); */
 		//$this->testDeleteUser(20);
 		//$this->testInsertUser();
@@ -19,17 +37,19 @@ class Home extends BaseController
 		echo '<br><br><br><a href="">logout</a>'; */
 
 		/* $auth = service('authorization');
-		$auth->addPermissionToUser('manage_survey', 4); */
+		$auth->addPermissionToUser('manage_survey', 7); */
+
+		//$this->auth->deleteGroup(3);
 
 		$data = [
 			'title' => 'Dashboard'
 		];
 
 		return view('home/index', $data);
-		/* $user = $this->auth->user();
-		$check = $this->auth->check();
+		//$user = $auth->id();
+		//$check = $this->auth->check();
 
-		$this->prettyVarDump($check,'user'); */
+		//$this->prettyVarDump($user,'user');
 
 		/* $this->type_satu(1, true);
 		$this->type_dua(true); */
@@ -126,7 +146,10 @@ class Home extends BaseController
 					# code...
 					$pertanyaan[$mkey] = $mvalue;
 					$data[$num]['pertanyaan'] = $pertanyaan;
-					//$listJawaban = $this->;
+					$listJawaban = $this->surveyJawabanModel->detailJawaban($mvalue['id_survey_pertanyaan'])->getResultArray();
+					foreach ($listJawaban as $key => $jvalue) {
+						$data[$num]['jawaban'][$jvalue['id_responden']] = $jvalue['isi_jawaban'];
+					}
 
 					$num2++;
 				}

@@ -3,25 +3,20 @@
 namespace App\Data;
 
 /***
- * class User dalam folder Data digunakan sebagai data Class untuk digunakan kembali
+ * class User Profile dalam folder Data yaitu data Class untuk digunakan kembali
  * supaya mengurangi banyak kode berulang maka digunakan data Class.
  * sebagai pendekatan dalam metode OOP
  * 
- * Nama Tabel = User
+ * Nama Tabel = User Profile
  */
-class User
+class UserProfile
 {
     /***
-     * nama field = id_user
+     * nama field = id_user_profile
      * 
      * digunakan sebagai Primary Key
      */
-    public $idUser;
-
-    /***
-     * nama field = username
-     */
-    public $username;
+    public $idUserProfile;
 
     /***
      * nama field = first_name
@@ -34,40 +29,40 @@ class User
     public $lastName;
 
     /***
-     * nama field = email
+     * nama field = alamat
      */
-    public $email;
+    public $alamat;
 
     /***
-     * nama field = password
-     * 
-     * Field ini seharusnya menggunakan PASSWORD_HASH
+     * nama field = nomor_hp
      */
-    public $password;
+    public $nomorHp;
 
     /***
      * nama field = created_at
      */
-    public $dateCreated;
+    //public $dateCreated;
 
     /***
      * nama field = updated_at
      * 
      */
-    public $dateModified;
+    //public $dateModified;
 
     /***
-     * nama field = role_id
-     * 
-     * digunakan untuk menentukan role user
+     * nama field = file_ktp
      */
-    public $roleId;
+    public $fileKtp;
 
     /***
-     * nama field = is_active
-     * 
+     * nama field = file_ktp
      */
-    public $isActive;
+    public $fotoProfile;
+
+    /***
+     * nama field = file_ktp
+     */
+    public $nomorRekening;
 
 
     public function getFullName()
@@ -90,22 +85,23 @@ class User
     /**
      * fungsi ini digunakan untuk mengkonversi data Class kedalam bentuk array
      * supaya bisa dicocokkan dengan nama field di database
-     * */ 
+     * */
     public function classToArray()
     {
         /** 
          * key = nama field 
          * value = nilai */
         $data = array(
-            'id_user' => $this->idUser,
-            'username' => $this->username,
-            'password' => $this->password,
+            'id_user_profile' => $this->idUserProfile,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
-            'created_at' => $this->dateCreated,
-            'updated_at' => $this->dateModified,
-            'role_id' => $this->roleId,
-            'is_active' => $this->isActive
+            /* 'created_at' => $this->dateCreated,
+            'updated_at' => $this->dateModified, */
+            'alamat' => $this->alamat,
+            'nomor_hp' => $this->nomorHp,
+            'file_ktp' => $this->fileKtp,
+            'nomor_rekening' => $this->nomorRekening,
+            'foto_profile' => $this->fotoProfile,
         );
 
         return $data;

@@ -28,8 +28,9 @@ class SurveyModel extends Model
 
     public function getAllSurvey()
     {
-        # untuk menampilkan semua survey
-        return $this->builder->get();
+        # untuk menampilkan semua survey yg active
+        // return $this->builder->get();
+        return $this->builder->getWhere(['is_active' => 1]);
     }
     // menampilkan survey by id cara levi
     // public function getSurveyById(bool $singleResult, $idSurvey)
@@ -44,12 +45,18 @@ class SurveyModel extends Model
         return $this->getWhere(['id_survey' => $idSurvey]);
     }
 
+    public function getSurveyByCreatorId($idCreator)
+    {
+        # code...
+        return $this->builder->getWhere(['id_creator' => $idCreator]);
+    }
+
 
     public function detailSurvey($id_survey)
     {
         # code...
         /* Join Tabel Survey dengan survey_pertanyaan dan survey_jawaban */
-        $this->builder->select('survey.id_survey, survey.deskripsi, survey_pertanyaan.id_survey_pertanyaan, survey_pertanyaan.pertanyaan, survey_jawaban.id_survey_jawaban, survey_jawaban.isi_jawaban, survey_jawaban.id_responden');
+        $this->builder->select('survey.id_survey, survey.deskripsi,survey.judul, survey_pertanyaan.id_survey_pertanyaan, survey_pertanyaan.pertanyaan, survey_jawaban.id_survey_jawaban, survey_jawaban.isi_jawaban, survey_jawaban.id_responden');
 
         //$builder->from($this->table);
 
