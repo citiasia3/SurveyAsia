@@ -78,12 +78,18 @@ class Survey extends BaseController
         //list pertanyaan dari detail survey
         $pertanyaan = $this->surveyPertanyaanModel->getPertanyaanBySurveyId($survey->id_survey)->getResult();
 
+        //creator
+        $creator = $this->user->where('id', $survey->id_creator)->first();
+
         $data = [
             'title' => 'Pertanyaan Survey',
             'survey' => $survey,
             'pertanyaan' => $pertanyaan,
+            'creator' => $creator,
             'pilihanJawabanModel' => $this->pilihanJawabanModel,
         ];
+
+        //$this->prettyVarDump($data, 'tes');
         return view('survey/surveyPertanyaan', $data);
     }
 
@@ -91,17 +97,15 @@ class Survey extends BaseController
     {
         # code...
         $answers = $this->request->getPost('answer');
-        $multi = $this->request->getPost('multi');
-        $jmlPertanyaan = $this->request->getPost('jml');
-        $idSurveys = $this->request->getPost('ids');
+        //$multi = $this->request->getPost('multi');
+        //$jmlPertanyaan = $this->request->getPost('jml');
+        //$idSurveys = $this->request->getPost('ids');
         $type = $this->request->getPost('type');
         $idResponden = $this->auth->id();
 
-        $data = [];
-
         $num = 0;
 
-        for ($i = 0; $i < $jmlPertanyaan; $i++) {
+        /* for ($i = 0; $i < $jmlPertanyaan; $i++) {
             # code...
             $data[$i]['id_responden'] = $idResponden;
             $data[$i]['id_survey_pertanyaan'] = $idSurveys[$i];
@@ -111,18 +115,29 @@ class Survey extends BaseController
             } else {
                 $data[$i]['isi_jawaban'] = implode(',', $multi);
             }
-        }
+        } */
 
-        /*  foreach ($answers as $key => $value) {
+        //fix
+        foreach ($answers as $key => $value) {
             # code...
             $data[$num] = [
                 'id_responden' => $idResponden,
-                'id_survey_pertanyaan' => $key,
-                'isi_jawaban' => $value
+                'id_survey_pertanyaan' => $key
             ];
-            $num++;
-        } */
+            if ($type[$num] == 0 || $type[$num] == 1) {
+                # code...
+                $data[$num]['isi_jawaban'] = $value;
+            } else {
+                $data[$num]['isi_jawaban'] = implode(',', $value);
+            }
 
+            $num++;
+        }
+
+
+
+
+        //$this->prettyVarDump($data, 'tes');
         $this->surveyJawabanModel->isiJawaban($data);
 
         return redirect()->to(base_url('survey/success'));
